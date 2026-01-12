@@ -1,0 +1,472 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"Ska",
+				"SkalarpoduktFraVinkel"
+			],
+			[
+				"Vi",
+				"VinkelTil"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "src/main.odin",
+			"settings":
+			{
+				"buffer_size": 87,
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/Python/Python.sublime-build",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					"Syntax Check"
+				]
+			],
+			[
+				"Packages/Python/Python.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"package control inst",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: upda",
+				"Package Control: Upgrade Package"
+			],
+			[
+				"install pack",
+				"Package Control: Install Package"
+			],
+			[
+				"enable p",
+				"Package Control: Enable Package"
+			],
+			[
+				"install packa",
+				"Package Control: Install Package"
+			],
+			[
+				"package inst",
+				"Package Control: Install Package"
+			],
+			[
+				"package enable",
+				"Package Control: Enable Package"
+			],
+			[
+				"Package Control: ena",
+				"Package Control: Enable Package"
+			],
+			[
+				"package install",
+				"Package Control: Install Package"
+			],
+			[
+				"package",
+				"Install Package Control"
+			]
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 355.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/D/git/gl",
+		"/D/git/gl/src"
+	],
+	"file_history":
+	[
+		"/D/git/gl/main.odin",
+		"/C/Users/lzzrhx/AppData/Roaming/Sublime Text/Packages/User/Odin.sublime-build",
+		"/D/git/voxel-space-engine/sdl2/src/main.odin",
+		"/D/git/lzzrhx/notes/MEDIA.txt",
+		"/D/downloads/torrent/finished/_unchecked/System Crasher (2019) [1080p] [BluRay] [5.1] [YTS.MX]/System.Crasher.2019.1080p.BluRay.x264.AAC5.1-[YTS.MX].srt",
+		"/D/downloads/torrent/finished/_unchecked/Son of Saul 2015 HUNGARIAN 1080p BluRay x264 DTS-JYK/Subs/English.srt",
+		"/D/downloads/torrent/finished/_unchecked/Bait (2019) [1080p] [WEBRip] [YTS.LT]/Bait.2019.1080p.WEBRip.x264.AAC-[YTS.LT].srt",
+		"/D/downloads/torrent/finished/_unchecked/[Ioroid] Cat Soup [AMZN WEB-DL 720p AVC E-AC3]/[Subtitles]/[Ioroid] Cat Soup [AMZN WEB-DL 720p AVC E-AC3].Viruson.srt",
+		"/D/git/studies/README.md",
+		"/D/git/studies/01-dataing/obsidian/.obsidian/app.json",
+		"/D/git/studies/01-dataing/obsidian/.obsidian/appearance.json",
+		"/D/git/studies/01-dataing/obsidian/.obsidian/community-plugins.json",
+		"/D/git/studies/01-dataing/obsidian/.obsidian/core-plugins.json",
+		"/D/git/studies/01-dataing/obsidian/.obsidian/graph.json",
+		"/D/git/studies/01-dataing/obsidian/.obsidian/hotkeys.json",
+		"/D/git/studies/01-dataing/obsidian/.obsidian/workspace.json",
+		"/D/DAT100 - Grunnleggende programmering.html",
+		"/D/obsidian/.obsidian/snippets/print.css",
+		"/D/obsidian/.obsidian/themes/Minimal/theme.css",
+		"/D/DAT111 - Introduksjon til programvareutvikling.html",
+		"/D/_export/MAT101 - Diskret matematikk 1.html",
+		"/D/git/lzzrhx.github.io/main.css",
+		"/D/obsidian/.obsidian/snippets/print2.css",
+		"/D/git/voxel-space-engine/README.md",
+		"/D/git/voxel-space-engine/doslike/README.txt",
+		"/C/Users/lzzrhx/AppData/Roaming/Picotron/drive/desktop/test.p64",
+		"/D/git/lzzrhx/notes/LINKS.txt",
+		"/D/git/voxel-space-engine/picotron/voxel.p64",
+		"/D/git/voxel-space-engine/sdl2/TODO.txt",
+		"/D/git/voxel-space-engine/doslike/main.c",
+		"/D/git/lzzrhx/notes/VIM.txt",
+		"/D/git/lzzrhx/notes/NOTES.txt",
+		"/D/git/lzzrhx/notes/MATH.txt",
+		"/D/git/lzzrhx/notes/GAME-PROGRAMMING-PATTERNS.txt",
+		"/D/git/lzzrhx/notes/GAMEDEV.txt",
+		"/D/git/lzzrhx/notes/BOOKS.txt",
+		"/D/git/lzzrhx/notes/BLENDER.txt",
+		"/D/git/voxel-space-engine/doslike/TODO.txt",
+		"/D/git/lzzrhx.github.io/_pages/about.md",
+		"/D/git/lzzrhx/dotfiles/winaero_tweaker_2025_06_01.ini",
+		"/D/_export/site-lib/styles/obsidian.css",
+		"/D/_export/site-lib/styles/theme.css",
+		"/D/_export/site-lib/styles/main-styles.css",
+		"/D/_export/site-lib/styles/global-variable-styles.css",
+		"/D/obsidian/.obsidian/snippets/pdf.css",
+		"/C/Users/lzzrhx/Desktop/Untitled.md",
+		"/D/other/gaems.txt",
+		"/D/git/lzzrhx/dotfiles/NOTES.txt",
+		"/D/git/lzzrhx/dotfiles/.config/gtk-3.0/settings.ini",
+		"/D/git/lzzrhx/dotfiles/.config/nvim/lua/plugins/treesitter.lua",
+		"/C/Users/lzzrhx/AppData/Roaming/pico-8/carts/magus/src/data.lua",
+		"/D/git/psx/README.MD",
+		"/D/git/psx/NOTES.TXT",
+		"/D/git/psx/CDLAYOUT.XML",
+		"/D/git/psx/SYSTEM.TXT",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO470FFC8E/main.c",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO4709D67F/sound.c",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO4703E571/CDLAYOUT.XML",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO470DE52D/sound.h",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO470C0B2D/sound.c",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO4702833D/main.c",
+		"/D/downloads/firefox/dlMWWMCZROqJdbYi8ugv_wipefaux/wipefaux/BUILDISO.BAT",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zE45257B82/BUILDISO.BAT",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zOC34A6F91/main.c",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zOC341DB25/CDLAYOUT.CTI",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO03DE2F15/CDLAYOUT.CTI",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO03D49721/sound.c",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO03D07D57/sound.c",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO03D3C63F/main.c",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO03DE9EC0/sound.h",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO03D68FD0/ship.h",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO4C478146/track.c",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO4819266F/ship.c",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO4810807F/main.c",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO0AB4E404/ship.c",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO0B0923B0/main.c",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO0B047708/ship.h",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO0B007679/ship.c",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO0B039002/object.c",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO01974AE6/ship.h",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO0192D786/ship.c",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zOC73560CB/track.c",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zOC73F7710/main.c",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO08CB6652/track.c",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zOCB5FA694/track.c",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO0EB3BD9C/track.c",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO41E2022D/object.h",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO41E85EDC/object.c",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO41EAA08C/texture.h",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO41E96EBC/texture.c",
+		"/D/git/pinky-compiler/README.md",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO8026816E/object.c",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO8028E547/object.h",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO80227773/main.c",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO80291307/object.c",
+		"/D/git/psx/NOTES.txt",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO802A4F79/object.h",
+		"/D/git/psx/README.md",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO06969CFF/main.c",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO80B1A8CE/globals.h",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO4F0CF718/CDLAYOUT.CTI",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO80B6F1EE/display.h",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zOCA0D7587/object.c",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zOCA036D97/object.h",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO0DC0D059/main.c",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO48316B51/main.c",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zE483661A5/model.bin",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO483CE9F5/inline_n.h",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO815A1FE8/makefile.mak",
+		"/D/git/psx/.gitignore",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO06A4CD51/main.c",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO06A976D4/utils.h",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO06ACD154/utils.c",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO02D2BDFF/camera.h",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO02D9334F/camera.h",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO02D82196/main.c",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO02D83483/camera.h",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO02DAD035/camera.c",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO0E491F9D/main.c",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zOC4549028/display.c",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO8ED598C5/display.h",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO8ED5AFC5/display.c",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO02E992DF/globals.h",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO06286FE2/joypad.c",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO062EF482/joypad.h",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO047625ED/joypad.h",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO0475E9DD/joypad.c",
+		"/C/Users/lzzrhx/AppData/Local/Temp/7zO04778EBD/main.c"
+	],
+	"find":
+	{
+		"height": 24.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"1991",
+			"natural born",
+			"time",
+			"ninja",
+			"ondekoza",
+			".gif",
+			"background",
+			"nvidia",
+			"blue",
+			"node",
+			"npm",
+			"mkconf",
+			"ly",
+			"PRM",
+			"pad",
+			"0x5000",
+			"magus.js",
+			"title_effect_num",
+			"fade_step",
+			"music(",
+			"insertcoin",
+			"-------------------------------------------------------------------------------",
+			"change_room",
+			"trigger",
+			"play_fade",
+			"change_room",
+			"fade_st",
+			"t()",
+			" t",
+			" t=",
+			"t=",
+			"t(",
+			"time()",
+			"img",
+			"im.bg",
+			"themeBg",
+			"sections",
+			"wcs",
+			"sin",
+			"cos",
+			"boxed",
+			"acos"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			""
+		],
+		"reverse": false,
+		"scrollbar_highlights": true,
+		"show_context": true,
+		"use_buffer2": true,
+		"use_gitignore": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "src/main.odin",
+					"selected": true,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 87,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"lsp_uri": "file:///D:/git/gl/src/main.odin",
+							"syntax": "Packages/Odin/Odin.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"stack_multiselect": false,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 24.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.LSP Log Panel":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"output.diagnostics":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"output.exec":
+	{
+		"height": 173.0,
+		"history":
+		[
+		]
+	},
+	"output.find_results":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"pinned_build_system": "Packages/User/Odin.sublime-build",
+	"project": "gl.sublime-project",
+	"replace":
+	{
+		"height": 44.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+		"lsp_show_inlay_hints": false
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 161.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
