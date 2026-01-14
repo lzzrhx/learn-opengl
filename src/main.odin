@@ -61,18 +61,63 @@ main :: proc() {
         os.exit(1)
     }
 
-    // Set vertices using normalized device coordinates (-1 to 1)
+    // Set vertices
     vertices := [?]f32 {
-        // Positions:      // Colors:       // Texture coords:
-         0.5,  0.5, 0.0,   1.0, 0.0, 0.0,   1.0, 1.0,
-         0.5, -0.5, 0.0,   0.0, 1.0, 0.0,   1.0, 0.0,
-        -0.5, -0.5, 0.0,   0.0, 0.0, 1.0,   0.0, 0.0,
-        -0.5,  0.5, 0.0,   1.0, 1.0, 0.0,   0.0, 1.0,
+        // Positions:      // Texture coords:
+        -0.5, -0.5, -0.5,  0.0, 0.0,
+         0.5, -0.5, -0.5,  1.0, 0.0,
+         0.5,  0.5, -0.5,  1.0, 1.0,
+         0.5,  0.5, -0.5,  1.0, 1.0,
+        -0.5,  0.5, -0.5,  0.0, 1.0,
+        -0.5, -0.5, -0.5,  0.0, 0.0,
+
+        -0.5, -0.5,  0.5,  0.0, 0.0,
+         0.5, -0.5,  0.5,  1.0, 0.0,
+         0.5,  0.5,  0.5,  1.0, 1.0,
+         0.5,  0.5,  0.5,  1.0, 1.0,
+        -0.5,  0.5,  0.5,  0.0, 1.0,
+        -0.5, -0.5,  0.5,  0.0, 0.0,
+
+        -0.5,  0.5,  0.5,  1.0, 0.0,
+        -0.5,  0.5, -0.5,  1.0, 1.0,
+        -0.5, -0.5, -0.5,  0.0, 1.0,
+        -0.5, -0.5, -0.5,  0.0, 1.0,
+        -0.5, -0.5,  0.5,  0.0, 0.0,
+        -0.5,  0.5,  0.5,  1.0, 0.0,
+
+         0.5,  0.5,  0.5,  1.0, 0.0,
+         0.5,  0.5, -0.5,  1.0, 1.0,
+         0.5, -0.5, -0.5,  0.0, 1.0,
+         0.5, -0.5, -0.5,  0.0, 1.0,
+         0.5, -0.5,  0.5,  0.0, 0.0,
+         0.5,  0.5,  0.5,  1.0, 0.0,
+
+        -0.5, -0.5, -0.5,  0.0, 1.0,
+         0.5, -0.5, -0.5,  1.0, 1.0,
+         0.5, -0.5,  0.5,  1.0, 0.0,
+         0.5, -0.5,  0.5,  1.0, 0.0,
+        -0.5, -0.5,  0.5,  0.0, 0.0,
+        -0.5, -0.5, -0.5,  0.0, 1.0,
+
+        -0.5,  0.5, -0.5,  0.0, 1.0,
+         0.5,  0.5, -0.5,  1.0, 1.0,
+         0.5,  0.5,  0.5,  1.0, 0.0,
+         0.5,  0.5,  0.5,  1.0, 0.0,
+        -0.5,  0.5,  0.5,  0.0, 0.0,
+        -0.5,  0.5, -0.5,  0.0, 1.0,
     }
-    // Set indices
-    indices := [?]u32 {
-        0, 1, 3,
-        1, 2, 3,
+    // Set cube positions
+    cube_positions := [?]glsl.vec3{
+        {0.0, 0.0, 0.0},
+        {2.0, 5.0, -15.0},
+        {-1.5, -2.2, -2.5},
+        {-3.8, -2.0, -12.3},
+        {2.4, -0.4, -3.5},
+        {-1.7, 3.0, -7.5},
+        {1.3, -2.0, -2.5},
+        {1.5, 2.0, -2.5},
+        {1.5, 0.2, -1.5},
+        {-1.3, 1.0, -1.5},
     }
 
     // Declare vertex array object
@@ -83,29 +128,18 @@ main :: proc() {
     vbo: u32
     // Generate object buffer and store ID in the VBO variable
     gl.GenBuffers(1, &vbo)
-    // Declare element buffer object id
-    ebo: u32
-    // Generate buffer object and store ID in the EBO variable
-    gl.GenBuffers(1, &ebo)
     // Bind vertex array object
     gl.BindVertexArray(vao)
     // Bind the vertex buffer to the type ARRAY_BUFFER (the buffer type used for vertex buffer objects)
     gl.BindBuffer(gl.ARRAY_BUFFER, vbo)
     // Copy the vertices into the (currently bound) buffer memory
     gl.BufferData(gl.ARRAY_BUFFER, size_of(vertices), raw_data(&vertices), gl.STATIC_DRAW)
-    // Bind the element buffer to the type ELEMENT_ARRAY_BUFFER
-    gl.BindBuffer(gl.ELEMENT_ARRAY_BUFFER, ebo)
-    // Copy the indices into the (currently bound) buffer memory
-    gl.BufferData(gl.ELEMENT_ARRAY_BUFFER, size_of(indices), raw_data(&indices), gl.STATIC_DRAW)
     // Specify how to interpret vertex data (position)
-    gl.VertexAttribPointer(0, 3, gl.FLOAT, gl.FALSE, 8 * size_of(f32), 0)
+    gl.VertexAttribPointer(0, 3, gl.FLOAT, gl.FALSE, 5 * size_of(f32), 0)
     gl.EnableVertexAttribArray(0)
-    // Specify how to interpret vertex data (color)
-    gl.VertexAttribPointer(1, 3, gl.FLOAT, gl.FALSE, 8 * size_of(f32), 3 * size_of(f32))
-    gl.EnableVertexAttribArray(1)
     // Specify how to interpret vertex data (texture coords)
-    gl.VertexAttribPointer(2, 2, gl.FLOAT, gl.FALSE, 8 * size_of(f32), 6 * size_of(f32))
-    gl.EnableVertexAttribArray(2)
+    gl.VertexAttribPointer(1, 2, gl.FLOAT, gl.FALSE, 5 * size_of(f32), 3 * size_of(f32))
+    gl.EnableVertexAttribArray(1)
 
     // Load texture (0)
     texture0: u32
@@ -148,6 +182,8 @@ main :: proc() {
     // Set the texture units for the shader samplers
     shader_set_int(shader_program, "tex0", 0)
     shader_set_int(shader_program, "tex1", 1)
+    // Enable depth testing
+    gl.Enable(gl.DEPTH_TEST)
 
     //gl.PolygonMode(gl.FRONT_AND_BACK, gl.LINE)
 
@@ -155,7 +191,7 @@ main :: proc() {
     for !glfw.WindowShouldClose(window) {
         input(window)
         gl.ClearColor(0.2, 0.3, 0.3, 1.0)
-        gl.Clear(gl.COLOR_BUFFER_BIT)
+        gl.Clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
 
         // Set active texture (0)
         gl.ActiveTexture(gl.TEXTURE0)
@@ -166,16 +202,30 @@ main :: proc() {
         // Bind texture object (1)
         gl.BindTexture(gl.TEXTURE_2D, texture1)
 
-        // Apply transformation
-        transform : glsl.mat4 = 1
-        transform *= glsl.mat4Translate({0.5, -0.5, 0.0})
-        transform *= glsl.mat4Rotate({0, 0, 1}, f32(glfw.GetTime()))
-        shader_set_mat4(shader_program, "transform", transform)
+        // View matrix
+        view: glsl.mat4 = 1
+        view *= glsl.mat4Translate({0.0, 0.0, -3.0})
+        shader_set_mat4(shader_program, "view", view)
+
+        // Projection matrix
+        projection: glsl.mat4 = 1
+        projection *= glsl.mat4Perspective(glsl.radians_f32(45.0), f32(f32(WINDOW_WIDTH) / f32(WINDOW_HEIGHT)), 0.1, 100.0)
+        shader_set_mat4(shader_program, "projection", projection)
 
         // Bind vertex array object
         gl.BindVertexArray(vao)
-        // Draw primitves
-        gl.DrawElements(gl.TRIANGLES, 6, gl.UNSIGNED_INT, nil)
+
+        // Draw all 10 cubes
+        for position, i in cube_positions {
+            // Model matrix
+            model: glsl.mat4 = 1
+            model *= glsl.mat4Translate(position)
+            model *= glsl.mat4Rotate({0.5, 1.0, 0.0}, f32(glfw.GetTime()) * glsl.radians_f32(20.0) * f32(i+1))
+            shader_set_mat4(shader_program, "model", model)
+
+            // Draw primitves
+            gl.DrawArrays(gl.TRIANGLES, 0, 36)
+        }
 
         glfw.SwapBuffers(window)
         glfw.PollEvents()
@@ -185,7 +235,7 @@ main :: proc() {
     // Exit the program
     gl.DeleteVertexArrays(1, &vao)
     gl.DeleteBuffers(1, &vbo)
-    gl.DeleteBuffers(1, &ebo)
+    //gl.DeleteBuffers(1, &ebo)
     gl.DeleteProgram(shader_program)
     glfw.Terminate()
 }

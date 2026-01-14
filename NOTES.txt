@@ -19,9 +19,9 @@
      [X]  1.3:  Hello Window
      [X]  1.4:  Hello Triangle
      [X]  1.5:  Shaders
-     [-]  1.6:  Textures
-     [-]  1.7:  Transformations
-     [-]  1.8:  Coordinate Systems
+     [X]  1.6:  Textures
+     [X]  1.7:  Transformations
+     [X]  1.8:  Coordinate Systems
      [-]  1.9:  Camera
      [-]  1.10: Review
    [-]  2: Lighting
@@ -80,6 +80,22 @@
     Website: https://learnopengl.com/
     PDF:     https://learnopengl.com/book/book_pdf.pdf
     Print:   https://www.amazon.co.uk/dp/9090332561
+
+- GLFW Documentation: https://www.glfw.org/docs/latest/
+
+- OpenGL Documentation: https://docs.gl/
+
+- Matrix multiplication visualizer: http://matrixmultiplication.xyz/
+
+- 3Blue1Brown - Essence of linear algebra: https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab
+
+- OpenGL Course - Create 3D and 2D Graphics With C++: https://youtu.be/45MIykWJ-C4
+
+- Jamie King - 3D Computer Graphics Using OpenGL: https://www.youtube.com/playlist?list=PLRwVmtr-pp06qT6ckboaOhnm9FxmzHpbY
+
+- The Cherno - OpenGL: https://www.youtube.com/playlist?list=PLlrATfBNZ98foTJPJ_Ev03o2oq3-GGOS2
+
+- OpenGL is a right-handed system
 
 - A fragment in OpenGL is all the data required for OpenGL to render a single pixel.
 
