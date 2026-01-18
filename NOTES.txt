@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////
-// This documents contains course notes for:
+// This document contains course notes for:
 // "Learn OpenGL"
 // https://learnopengl.com/
 ///////////////////////////////////////////////////////////////////////////////
@@ -25,7 +25,7 @@
      [X]  1.9:  Camera
      [X]  1.10: Review
    [-]  2: Lighting
-     [-]  2.1:  Colors
+     [X]  2.1:  Colors
      [-]  2.2:  Basic Lighting
      [-]  2.3:  Materials
      [-]  2.4:  Lighting maps
@@ -94,6 +94,8 @@
 - Jamie King - 3D Computer Graphics Using OpenGL: https://www.youtube.com/playlist?list=PLRwVmtr-pp06qT6ckboaOhnm9FxmzHpbY
 
 - The Cherno - OpenGL: https://www.youtube.com/playlist?list=PLlrATfBNZ98foTJPJ_Ev03o2oq3-GGOS2
+
+- Full screen triangle optimization: https://30fps.net/pages/twotris/
 
 - OpenGL is a right-handed system
 
