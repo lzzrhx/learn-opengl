@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
-// This document contains course notes for:
-// "Learn OpenGL"
+// This document contains notes for the course:
+// "Learn OpenGL" by Joey de Vries
 // https://learnopengl.com/
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -27,7 +27,7 @@
    [-]  2: Lighting
      [X]  2.1:  Colors
      [X]  2.2:  Basic Lighting
-     [-]  2.3:  Materials
+     [X]  2.3:  Materials
      [-]  2.4:  Lighting maps
      [-]  2.5:  Light casters
      [-]  2.6:  Multiple lights
@@ -80,6 +80,7 @@
     Website: https://learnopengl.com/
     PDF:     https://learnopengl.com/book/book_pdf.pdf
     Print:   https://www.amazon.co.uk/dp/9090332561
+    Repo:    https://github.com/JoeyDeVries/LearnOpenGL
 
 - GLFW Documentation: https://www.glfw.org/docs/latest/
 
