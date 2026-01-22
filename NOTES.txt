@@ -6,7 +6,8 @@
 
  SECTIONS:
    #1: COURSE OVERVIEW
-   #2: NOTES
+   #2: LINKS
+   #3: NOTES
 
 
 
@@ -73,30 +74,78 @@
 
 
 
-  #2 | NOTES:
+  #2 | LINKS:
  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
 - Learn OpenGL:
-    Website: https://learnopengl.com/
-    PDF:     https://learnopengl.com/book/book_pdf.pdf
-    Print:   https://www.amazon.co.uk/dp/9090332561
-    Repo:    https://github.com/JoeyDeVries/LearnOpenGL
+  + Website: https://learnopengl.com/
+  + PDF:     https://learnopengl.com/book/book_pdf.pdf
+  + Print:   https://www.amazon.co.uk/dp/9090332561
+  + Repo:    https://github.com/JoeyDeVries/LearnOpenGL
 
-- GLFW Documentation: https://www.glfw.org/docs/latest/
+- Documentation:
+  + GLFW Documentation - https://www.glfw.org/docs/latest/
+  + OpenGL Documentation - https://docs.gl/
 
-- OpenGL Documentation: https://docs.gl/
+- Videos:
+  + Graphics Programming - https://www.youtube.com/playlist?list=PLUznfNKscdcO_CqskY66YaXqARepJwanV
+  + 3Blue1Brown, Essence of linear algebra - https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab
+  + OpenGL Course, Create 3D and 2D Graphics With C++ - https://youtu.be/45MIykWJ-C4
+  + Jamie King, 3D Computer Graphics Using OpenGL - https://www.youtube.com/playlist?list=PLRwVmtr-pp06qT6ckboaOhnm9FxmzHpbY
+  + The Cherno, OpenGL - https://www.youtube.com/playlist?list=PLlrATfBNZ98foTJPJ_Ev03o2oq3-GGOS2
 
-- Matrix multiplication visualizer: http://matrixmultiplication.xyz/
+- Books (online and free):
+  + Physically Based Rendering: From Theory to Implementation - https://pbr-book.org/4ed/contents
+  + Ray Tracing in One Weekend - https://raytracing.github.io/
+  + 3D Math Primer for Graphics and Game Development - https://gamemath.com/book/
 
-- 3Blue1Brown - Essence of linear algebra: https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab
+- GPU Gems:
+  + https://developer.nvidia.com/gpugems/gpugems/
+  + https://developer.nvidia.com/gpugems/gpugems2/
+  + https://developer.nvidia.com/gpugems/gpugems3/
 
-- OpenGL Course - Create 3D and 2D Graphics With C++: https://youtu.be/45MIykWJ-C4
+- Math:
+  + Matrix multiplication visualizer - http://matrixmultiplication.xyz/
+  + Immersive Math - https://immersivemath.com/
 
-- Jamie King - 3D Computer Graphics Using OpenGL: https://www.youtube.com/playlist?list=PLRwVmtr-pp06qT6ckboaOhnm9FxmzHpbY
+- Articles:
+  + The Eras of GPU Development - https://blog.siggraph.org/2025/04/evolution-of-gpus.html/
+  + What is a color space? - https://www.makingsoftware.com/chapters/color-spaces-models-and-gamuts
+  + The DDA Algorithm, explained interactively - https://aaaa.sh/creatures/dda-algorithm-interactive/
 
-- The Cherno - OpenGL: https://www.youtube.com/playlist?list=PLlrATfBNZ98foTJPJ_Ev03o2oq3-GGOS2
+- Tips / techniques:
+  + Full screen triangle optimization - https://30fps.net/pages/twotris/
+  + A series of tricks and techniques I learned doing tiny GLSL demos - https://blog.pkh.me/p/48-a-series-of-tricks-and-techniques-i-learned-doing-tiny-glsl-demos.html
 
-- Full screen triangle optimization: https://30fps.net/pages/twotris/
+- XOR:
+  + Mini: 3D Rotation - https://mini.gmshaders.com/p/3d-rotation
+  + Mini: Lights - https://mini.gmshaders.com/p/gm-shaders-mini-lights
+  + Noise - https://mini.gmshaders.com/p/gm-shaders-mini-noise-1437243
+  + Noise 2 - https://mini.gmshaders.com/p/noise2
+  + Functions: Mix - https://mini.gmshaders.com/p/func-mix
+  + Decoding: Phosphor - https://mini.gmshaders.com/p/decoding-phosphor
+
+Inigo Quilez:
+  + 2D SDFs - https://iquilezles.org/articles/distfunctions2d/
+  + 3D SDFs - https://iquilezles.org/articles/distfunctions/
+  + 2D SDFs and gradients - https://iquilezles.org/articles/distgradfunctions2d/
+  + 3D SDFs and gradients - https://iquilezles.org/articles/distgradfunctions3d/
+  + 2D SDF Bounding Boxes - https://iquilezles.org/articles/bboxes2d/
+  + 3D SDF Bounding Boxes - https://iquilezles.org/articles/bboxes3d/
+
+- Shadertoy: https://www.shadertoy.com/
+
+- RenderDoc (graphics debugger): https://renderdoc.org/
+
+  #3 | NOTES:
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+- Books:
+  + Real-Time Rendering
+  + Foundations of Game Engine Development
+  + Computer Graphics: Principles and Practice
+  + Graphics Programming Black Book
+  + Understanding the Odin Programming Language
 
 - OpenGL is a right-handed system
 
