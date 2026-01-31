@@ -33,10 +33,10 @@
      [X]  2.5:  Light casters
      [X]  2.6:  Multiple lights
      [X]  2.7:  Review
-   [-]  3: Model Loading
-     [-]  3.1:  Assimp
-     [-]  3.2:  Mesh
-     [-]  3.3:  Model
+   [X]  3: Model Loading
+     [X]  3.1:  Assimp
+     [X]  3.2:  Mesh
+     [X]  3.3:  Model
    [-]  4: Advanced OpenGL
      [-]  4.1:  Depth testing
      [-]  4.2:  Stencil testing

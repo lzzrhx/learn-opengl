@@ -16,7 +16,6 @@ VERTEX_SHADER_LIGHT   :: "./src/shaders/light.vs"
 FRAGMENT_SHADER_LIGHT :: "./src/shaders/light.fs"
 DIFFUSE_TEXTURE       :: "./assets/container2.png"
 SPECULAR_TEXTURE      :: "./assets/container2-specular.png"
-//NUM_POINT_LIGHTS      :: 4
 
 
 main :: proc() {
@@ -35,8 +34,6 @@ main :: proc() {
         materials     = make([dynamic]Material),
         models        = make([dynamic]Model),
         dir_light     = &DirLight{},
-        //point_lights  = new([NUM_POINT_LIGHTS]PointLight),
-        //spot_light    = &SpotLight{},
         camera        = &Camera{
             pos   = {0.0, 0.0, 0.0},
             up    = {0, 1, 0},
