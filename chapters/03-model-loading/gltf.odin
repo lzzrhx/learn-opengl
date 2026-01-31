@@ -78,7 +78,6 @@ gltf_load ::proc(meshes: ^map[string]Mesh, name: string, path: string) {
     // Read vertices
     num_verts := pos_accessor.count
     verts := make([dynamic]f32, num_verts * 8, context.temp_allocator)
-    log.debugf("Loading vertices: found %d positions, %d normals, %d texture coordinates", pos_accessor.count, normal_accessor.count, texcoord_accessor.count)
     for i in 0..< num_verts {
         // Read vertex positions
         if !cgltf.accessor_read_float(pos_accessor, i, &verts[i * 8], 3) {

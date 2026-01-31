@@ -23,8 +23,18 @@ model_render :: proc(model: ^Model, shader_program: u32) {
     model_mat *= glsl.mat4Scale(model.scale)
     shader_set_mat4(shader_program, "model_mat", model_mat)
     shader_set_mat3(shader_program, "normal_mat", glsl.mat3(glsl.inverse_transpose(model_mat)));
+    //shader_set_int(shader_program, "material.diffuse", 0)
+    //shader_set_int(shader_program, "material.specular", 1)
     shader_set_float(shader_program, "material.shininess", model.material.shininess)
     shader_set_vec3(shader_program, "material.color", model.material.color)
+    // Set active texture (0)
+    //gl.ActiveTexture(gl.TEXTURE0)
+    // Bind texture object (0)
+    //gl.BindTexture(gl.TEXTURE_2D, model.material.diffuse)
+    // Set active texture (1)
+    //gl.ActiveTexture(gl.TEXTURE1)
+    // Bind texture object (1)
+    //gl.BindTexture(gl.TEXTURE_2D, model.material.specular)
     // Bind vertex array object
     gl.BindVertexArray(model.mesh.vao)
     // Draw primitves
