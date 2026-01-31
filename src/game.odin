@@ -31,6 +31,7 @@ game_init :: proc(game: ^Game) {
     glfw.WindowHint(glfw.CONTEXT_VERSION_MAJOR, GL_VERSION_MAJOR)
     glfw.WindowHint(glfw.CONTEXT_VERSION_MINOR, GL_VERSION_MINOR)
     glfw.WindowHint(glfw.OPENGL_PROFILE, glfw.OPENGL_CORE_PROFILE)
+    //glfw.WindowHint(glfw.SAMPLES, 4)
     game.window = glfw.CreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE, nil, nil)
     if game.window == nil {
         log.errorf("GLFW window creation failed.")
@@ -54,6 +55,12 @@ game_init :: proc(game: ^Game) {
     }
     // Enable depth testing
     gl.Enable(gl.DEPTH_TEST)
+    gl.DepthFunc(gl.LESS)
+    //gl.Enable(gl.BLEND)
+    //gl.BlendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
+    gl.Enable(gl.CULL_FACE)
+    //gl.CullFace(gl.BACK)
+    //gl.Enable(gl.MULTISAMPLE)
 }
 
 game_setup :: proc(game: ^Game) {

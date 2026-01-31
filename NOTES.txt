@@ -37,18 +37,18 @@
      [X]  3.1:  Assimp
      [X]  3.2:  Mesh
      [X]  3.3:  Model
-   [-]  4: Advanced OpenGL
-     [-]  4.1:  Depth testing
-     [-]  4.2:  Stencil testing
-     [-]  4.3:  Blending
-     [-]  4.4:  Face culling
-     [-]  4.5:  Framebuffers
-     [-]  4.6:  Cubnemaps
-     [-]  4.7:  Advanced Data
-     [-]  4.8:  Advanced GLSL
-     [-]  4.9:  Geometry Shader
-     [-]  4.10: Instancing
-     [-]  4.11: Anti Aliasing
+   [X]  4: Advanced OpenGL
+     [X]  4.1:  Depth testing
+     [X]  4.2:  Stencil testing
+     [X]  4.3:  Blending
+     [X]  4.4:  Face culling
+     [X]  4.5:  Framebuffers
+     [X]  4.6:  Cubnemaps
+     [X]  4.7:  Advanced Data
+     [X]  4.8:  Advanced GLSL
+     [X]  4.9:  Geometry Shader
+     [X]  4.10: Instancing
+     [X]  4.11: Anti Aliasing
    [-]  5: Advanced Lighting
      [-]  5.1:  Advanced Lighting
      [-]  5.2:  Gamma Correction
