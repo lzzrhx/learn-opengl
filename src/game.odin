@@ -18,7 +18,8 @@ Game :: struct {
     dir_light:             ^DirLight,
     spot_light:            ^SpotLight,
     camera:                ^Camera,
-    meshes:                [dynamic]Mesh,
+    primitives:            map[Primitive]Mesh,
+    meshes:                map[string]Mesh,
     materials:             [dynamic]Material,
     models:                [dynamic]Model,
 }
@@ -56,53 +57,11 @@ game_init :: proc(game: ^Game) {
 }
 
 game_setup :: proc(game: ^Game) {
+    // Load primitive meshes
+    primitives_load(&game.primitives);
+
     // Load meshes
-    cube_verts := [?]f32 {
-        // Vertex coords:    Normals:            Texture coords:
-        // Face #1
-        -0.5, -0.5, -0.5,    0.0,  0.0, -1.0,    0.0, 0.0,
-         0.5, -0.5, -0.5,    0.0,  0.0, -1.0,    1.0, 0.0,
-         0.5,  0.5, -0.5,    0.0,  0.0, -1.0,    1.0, 1.0,
-         0.5,  0.5, -0.5,    0.0,  0.0, -1.0,    1.0, 1.0,
-        -0.5,  0.5, -0.5,    0.0,  0.0, -1.0,    0.0, 1.0,
-        -0.5, -0.5, -0.5,    0.0,  0.0, -1.0,    0.0, 0.0,
-        // Face #2
-        -0.5, -0.5,  0.5,    0.0,  0.0,  1.0,    0.0, 0.0,
-         0.5, -0.5,  0.5,    0.0,  0.0,  1.0,    1.0, 0.0,
-         0.5,  0.5,  0.5,    0.0,  0.0,  1.0,    1.0, 1.0,
-         0.5,  0.5,  0.5,    0.0,  0.0,  1.0,    1.0, 1.0,
-        -0.5,  0.5,  0.5,    0.0,  0.0,  1.0,    0.0, 1.0,
-        -0.5, -0.5,  0.5,    0.0,  0.0,  1.0,    0.0, 0.0,
-        // Face #3
-        -0.5,  0.5,  0.5,   -1.0,  0.0,  0.0,    1.0, 0.0,
-        -0.5,  0.5, -0.5,   -1.0,  0.0,  0.0,    1.0, 1.0,
-        -0.5, -0.5, -0.5,   -1.0,  0.0,  0.0,    0.0, 1.0,
-        -0.5, -0.5, -0.5,   -1.0,  0.0,  0.0,    0.0, 1.0,
-        -0.5, -0.5,  0.5,   -1.0,  0.0,  0.0,    0.0, 0.0,
-        -0.5,  0.5,  0.5,   -1.0,  0.0,  0.0,    1.0, 0.0,
-        // Face #4
-         0.5,  0.5,  0.5,    1.0,  0.0,  0.0,    1.0, 0.0,
-         0.5,  0.5, -0.5,    1.0,  0.0,  0.0,    1.0, 1.0,
-         0.5, -0.5, -0.5,    1.0,  0.0,  0.0,    0.0, 1.0,
-         0.5, -0.5, -0.5,    1.0,  0.0,  0.0,    0.0, 1.0,
-         0.5, -0.5,  0.5,    1.0,  0.0,  0.0,    0.0, 0.0,
-         0.5,  0.5,  0.5,    1.0,  0.0,  0.0,    1.0, 0.0,
-         // Face #5
-        -0.5, -0.5, -0.5,    0.0, -1.0,  0.0,    0.0, 1.0,
-         0.5, -0.5, -0.5,    0.0, -1.0,  0.0,    1.0, 1.0,
-         0.5, -0.5,  0.5,    0.0, -1.0,  0.0,    1.0, 0.0,
-         0.5, -0.5,  0.5,    0.0, -1.0,  0.0,    1.0, 0.0,
-        -0.5, -0.5,  0.5,    0.0, -1.0,  0.0,    0.0, 0.0,
-        -0.5, -0.5, -0.5,    0.0, -1.0,  0.0,    0.0, 1.0,
-        // Face #6
-        -0.5,  0.5, -0.5,    0.0,  1.0,  0.0,    0.0, 1.0,
-         0.5,  0.5, -0.5,    0.0,  1.0,  0.0,    1.0, 1.0,
-         0.5,  0.5,  0.5,    0.0,  1.0,  0.0,    1.0, 0.0,
-         0.5,  0.5,  0.5,    0.0,  1.0,  0.0,    1.0, 0.0,
-        -0.5,  0.5,  0.5,    0.0,  1.0,  0.0,    0.0, 0.0,
-        -0.5,  0.5, -0.5,    0.0,  1.0,  0.0,    0.0, 1.0,
-    }
-    mesh_new(&game.meshes, cube_verts[:])
+    gltf_load(&game.meshes, "bunny", "./assets/bunny.glb")
 
     // Initialize materials
     material_new(
@@ -111,24 +70,24 @@ game_setup :: proc(game: ^Game) {
         specular = texture_load(SPECULAR_TEXTURE),
         shininess = 32.0,
     )
-    
+
     // Initialize models
     model_new(
         &game.models,
         pos      = {-2.0,  0.0, -7.0},
-        mesh     = &game.meshes[0],
+        mesh     = &game.primitives[.Cube],
         material = &game.materials[0],
     )
     model_new(
         &game.models,
         pos      = { 0.0,  0.0, -7.0},
-        mesh     = &game.meshes[0],
+        mesh     = &game.meshes["bunny"],
         material = &game.materials[0],
     )
     model_new(
         &game.models,
         pos      = { 2.0,  0.0, -7.0},
-        mesh     = &game.meshes[0],
+        mesh     = &game.primitives[.Cube],
         material = &game.materials[0],
     )
 
@@ -143,7 +102,7 @@ game_setup :: proc(game: ^Game) {
         game.point_lights[i].linear      = 0.09
         game.point_lights[i].quadratic   = 0.032
         game.point_lights[i].scale       = { 0.2,  0.2,  0.2}
-        game.point_lights[i].mesh        = &game.meshes[0]
+        game.point_lights[i].mesh        = &game.primitives[.Cube]
     }
     game.point_lights[0].pos         = { 0.0,  0.0, -6.0}
     game.point_lights[0].diffuse     = { 0.5,  0.5,  0.5}
@@ -270,12 +229,16 @@ game_render :: proc(game: ^Game) {
 
 game_exit :: proc(game: ^Game) {
     defer glfw.Terminate()
+    defer delete(game.primitives)
     defer delete(game.meshes)
     defer delete(game.materials)
     defer delete(game.models)
     free(game.point_lights)
     gl.DeleteProgram(game.shader_program)
-    for &mesh in game.meshes {
+    for key, &mesh in game.primitives {
+        mesh_destroy(&mesh)
+    }
+    for key, &mesh in game.meshes {
         mesh_destroy(&mesh)
     }
 }

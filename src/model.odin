@@ -37,5 +37,5 @@ model_render :: proc(model: ^Model, shader_program: u32) {
     // Bind vertex array object
     gl.BindVertexArray(model.mesh.vao)
     // Draw primitves
-    gl.DrawArrays(gl.TRIANGLES, 0, model.mesh.tris)
+    gl.DrawElements(gl.TRIANGLES, model.mesh.num_indices, gl.UNSIGNED_INT, nil)
 }

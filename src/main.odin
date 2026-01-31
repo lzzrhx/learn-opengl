@@ -4,17 +4,18 @@ import "core:log"
 import "core:mem"
 import "vendor:glfw"
 
+
 WINDOW_WIDTH          :: 1920
 WINDOW_HEIGHT         :: 1080
 WINDOW_TITLE          :: "gl"
 GL_VERSION_MAJOR      :: 3
 GL_VERSION_MINOR      :: 3
-VERTEX_SHADER         :: "./shaders/default.vs"
-FRAGMENT_SHADER       :: "./shaders/default.fs"
-VERTEX_SHADER_LIGHT   :: "./shaders/light.vs"
-FRAGMENT_SHADER_LIGHT :: "./shaders/light.fs"
-DIFFUSE_TEXTURE       :: "../assets/container2.png"
-SPECULAR_TEXTURE      :: "../assets/container2-specular.png"
+VERTEX_SHADER         :: "./src/shaders/default.vs"
+FRAGMENT_SHADER       :: "./src/shaders/default.fs"
+VERTEX_SHADER_LIGHT   :: "./src/shaders/light.vs"
+FRAGMENT_SHADER_LIGHT :: "./src/shaders/light.fs"
+DIFFUSE_TEXTURE       :: "./assets/container2.png"
+SPECULAR_TEXTURE      :: "./assets/container2-specular.png"
 NUM_POINT_LIGHTS      :: 4
 
 
@@ -29,7 +30,8 @@ main :: proc() {
 
     // Program initialization
     game := &Game{
-        meshes        = make([dynamic]Mesh),
+        primitives    = make(map[Primitive]Mesh),
+        meshes        = make(map[string]Mesh),
         materials     = make([dynamic]Material),
         models        = make([dynamic]Model),
         point_lights  = new([NUM_POINT_LIGHTS]PointLight),
@@ -46,7 +48,6 @@ main :: proc() {
         },
     }
     game_init(game)
-    defer game_exit(game)
     game_setup(game)
 
     // Time measurement variables
@@ -65,4 +66,6 @@ main :: proc() {
         glfw.PollEvents()
         mem_check_bad_free(&tracking_allocator)
     }
+    
+    game_exit(game)
 }

@@ -49,7 +49,7 @@ in vec3 vs_normal;
 in vec2 vs_tex_coords;
 
 // Outs
-out vec4 FragColor;
+out vec4 frag_color;
 
 vec3 calc_dir_light(DirLight light, vec3 normal, vec3 view_dir, vec3 diff_color, vec3 spec_color);
 vec3 calc_point_light(PointLight light, vec3 normal, vec3 view_dir, vec3 diff_color, vec3 spec_color);
@@ -94,10 +94,9 @@ void main()
 {
     vec3 view_dir = normalize(view_pos - vs_pos);
     vec3 normal = normalize(vs_normal);
-    vec3 ambient = ambient_light * texture(material.diffuse, vs_tex_coords).rgb;
     vec3 diff_color = texture(material.diffuse, vs_tex_coords).rgb;
     vec3 spec_color = texture(material.specular, vs_tex_coords).rgb;
-    vec3 color = ambient + calc_dir_light(dir_light, normal, view_dir, diff_color, spec_color) + calc_spot_light(spot_light, normal, view_dir, diff_color, spec_color);
+    vec3 color = (ambient_light * diff_color) + calc_dir_light(dir_light, normal, view_dir, diff_color, spec_color) + calc_spot_light(spot_light, normal, view_dir, diff_color, spec_color);
     for (int i = 0; i < NUM_POINT_LIGHTS; i++) { color += calc_point_light(point_lights[i], normal, view_dir, diff_color, spec_color); }
-    FragColor = vec4(color, 1.0);
+    frag_color = vec4(color, 1.0);
 }

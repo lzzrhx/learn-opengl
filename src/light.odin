@@ -42,5 +42,5 @@ point_light_render :: proc(light: ^PointLight, shader_program: u32) {
     shader_set_mat4(shader_program, "model_mat", model_mat)
     shader_set_vec3(shader_program, "color", light.diffuse)
     // Draw primitves
-    gl.DrawArrays(gl.TRIANGLES, 0, light.mesh.tris)
+    gl.DrawElements(gl.TRIANGLES, light.mesh.num_indices, gl.UNSIGNED_INT, nil)
 }
