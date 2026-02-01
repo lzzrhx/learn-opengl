@@ -50,11 +50,9 @@
      [X]  4.10: Instancing
      [X]  4.11: Anti Aliasing
    [-]  5: Advanced Lighting
-     [-]  5.1:  Advanced Lighting
-     [-]  5.2:  Gamma Correction
-     [-]  5.3:  Shadows
-       [-]  5.3.1:  Shadow Mapping
-       [-]  5.3.2:  Point Shadows
+     [X]  5.1:  Advanced Lighting
+     [X]  5.2:  Gamma Correction
+     [X]  5.3:  Shadows
      [-]  5.4:  Normal Mapping
      [-]  5.5:  Parallax Mapping
      [-]  5.6:  HDR
@@ -65,10 +63,20 @@
      [-]  6.1:  Theory
      [-]  6.2:  Lighting
      [-]  6.3:  IBL
-       [-]  6.3.1:  Diffuse irradiance
-       [-]  6.3.1:  Specular IBL
    [-]  7: In Practice
+     [-]  7.1:  Debugging
+     [-]  7.2:  Text Rendering
+     [-]  7.3:  2D Game
    [-]  8: Guest Articles
+     [-]  8.1:  OIT
+     [-]  8.2:  Skeletal Animation
+     [-]  8.3:  CSM
+     [-]  8.4:  Scene
+     [-]  8.5:  Tessellation
+     [-]  8.6:  DSA
+     [-]  8.7:  Compute Shaders
+     [-]  8.8:  Phys. Based Bloom
+     [-]  8.9:  Area Lights
 
    [X] COMPLETED / [-] NOT COMPLETED
 
