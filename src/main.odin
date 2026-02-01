@@ -10,13 +10,18 @@ WINDOW_HEIGHT         :: 1080
 WINDOW_TITLE          :: "gl"
 GL_VERSION_MAJOR      :: 3
 GL_VERSION_MINOR      :: 3
-VERTEX_SHADER         :: "./src/shaders/default.vs"
-FRAGMENT_SHADER       :: "./src/shaders/default.fs"
-VERTEX_SHADER_LIGHT   :: "./src/shaders/light.vs"
-FRAGMENT_SHADER_LIGHT :: "./src/shaders/light.fs"
+VS_DEFAULT            :: "./src/shaders/default.vs"
+FS_DEFAULT            :: "./src/shaders/default.fs"
+VS_LIGHT              :: "./src/shaders/light.vs"
+FS_LIGHT              :: "./src/shaders/light.fs"
+VS_SHADOW             :: "./src/shaders/shadow.vs"
+FS_EMPTY              :: "./src/shaders/empty.fs"
+VS_SCREEN             :: "./src/shaders/screen.vs"
+FS_SCREEN             :: "./src/shaders/screen.fs"
 DIFFUSE_TEXTURE       :: "./assets/container2.png"
 SPECULAR_TEXTURE      :: "./assets/container2-specular.png"
 //NUM_POINT_LIGHTS      :: 4
+SHADOWMAP_SIZE        :: 1024
 
 
 main :: proc() {
@@ -38,7 +43,7 @@ main :: proc() {
         //point_lights  = new([NUM_POINT_LIGHTS]PointLight),
         //spot_light    = &SpotLight{},
         camera        = &Camera{
-            pos   = {0.0, 0.0, 0.0},
+            pos   = {0.0, 1.0, 0.0},
             up    = {0, 1, 0},
             front = {0, 0, -1},
             speed = 2.5,
