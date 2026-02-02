@@ -5,25 +5,28 @@ import "core:mem"
 import "vendor:glfw"
 
 
-WINDOW_WIDTH          :: 1920
-WINDOW_HEIGHT         :: 1080
-WINDOW_TITLE          :: "gl"
-GL_VERSION_MAJOR      :: 3
-GL_VERSION_MINOR      :: 3
-VS_DEFAULT            :: "./src/shaders/default.vs"
-FS_DEFAULT            :: "./src/shaders/default.fs"
-VS_LIGHT              :: "./src/shaders/light.vs"
-FS_LIGHT              :: "./src/shaders/light.fs"
-VS_SHADOW             :: "./src/shaders/shadow.vs"
-FS_EMPTY              :: "./src/shaders/empty.fs"
-VS_SCREEN             :: "./src/shaders/screen.vs"
-FS_SCREEN             :: "./src/shaders/screen.fs"
-DIFFUSE_TEXTURE       :: "./assets/container2.png"
-SPECULAR_TEXTURE      :: "./assets/container2-specular.png"
-//NUM_POINT_LIGHTS      :: 4
-SHADOWMAP_SIZE        :: 2048
-CLIP_NEAR             :: 0.1
-CLIP_FAR              :: 100
+WINDOW_WIDTH            :: 1920
+WINDOW_HEIGHT           :: 1080
+WINDOW_TITLE            :: "gl"
+GL_VERSION_MAJOR        :: 4
+GL_VERSION_MINOR        :: 3
+SHADER_DEFAULT_VERT     :: "./src/shaders/default.vert"
+SHADER_DEFAULT_FRAG     :: "./src/shaders/default.frag"
+SHADER_LIGHT_VERT       :: "./src/shaders/light.vert"
+SHADER_LIGHT_FRAG       :: "./src/shaders/light.frag"
+SHADER_SHADOW_VERT      :: "./src/shaders/shadow.vert"
+SHADER_EMPTY_FRAG       :: "./src/shaders/empty.frag"
+SHADER_SCREEN_VERT      :: "./src/shaders/screen.vert"
+SHADER_SCREEN_FRAG      :: "./src/shaders/screen.frag"
+TEXTURE_DIFFUSE         :: "./assets/container2.png"
+TEXTURE_SPECULAR        :: "./assets/container2-specular.png"
+NUM_POINT_LIGHTS        :: 1
+SHADOWMAP_SIZE          :: 2048
+CLIP_NEAR               :: 0.1
+CLIP_FAR                :: 100
+OPTION_VSYNC            :: true
+OPTION_ANTI_ALIAS       :: true
+OPTION_GAMMA_CORRECTION :: true
 
 
 main :: proc() {
@@ -42,7 +45,7 @@ main :: proc() {
         materials     = make([dynamic]Material),
         models        = make([dynamic]Model),
         dir_light     = &DirLight{},
-        //point_lights  = new([NUM_POINT_LIGHTS]PointLight),
+        point_lights  = new([NUM_POINT_LIGHTS]PointLight),
         //spot_light    = &SpotLight{},
         camera        = &Camera{
             pos   = {0.0, 1.0, 0.0},
@@ -57,18 +60,10 @@ main :: proc() {
     game_init(game)
     game_setup(game)
 
-    // Time measurement variables
-    time_current: f64
-    time_prev: f64
-    dt: f64
-
     // Main Loop
     for !glfw.WindowShouldClose(game.window) {
-        time_current = glfw.GetTime()
-        dt = time_current - time_prev
-        time_prev = time_current
-        game_input(game, dt)
-        game_update(game, dt)
+        game_input(game)
+        game_update(game)
         game_render(game)
         glfw.PollEvents()
         mem_check_bad_free(&tracking_allocator)

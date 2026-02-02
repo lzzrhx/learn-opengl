@@ -34,7 +34,7 @@ struct SpotLight {
     float quadratic;
 };
 
-//#define NUM_POINT_LIGHTS 4
+#define NUM_POINT_LIGHTS 1
 
 // Uniforms
 uniform sampler2D shadow_map;
@@ -43,7 +43,7 @@ uniform vec3 view_pos;
 uniform Material material;
 uniform DirLight dir_light;
 //uniform SpotLight spot_light;
-//uniform PointLight point_lights[NUM_POINT_LIGHTS];
+uniform PointLight point_lights[NUM_POINT_LIGHTS];
 
 // Ins
 in vec3 vs_pos;
@@ -104,11 +104,13 @@ void main()
     //vec3 spec_color = texture(material.specular, vs_tex_coords).rgb;
     vec3 diff_color = material.color;
     vec3 spec_color = vec3(1.0);
-    vec3 color = (ambient_light * diff_color) + calc_dir_light(dir_light, normal, view_dir, diff_color, spec_color);// + calc_spot_light(spot_light, normal, view_dir, diff_color, spec_color);
-    //for (int i = 0; i < NUM_POINT_LIGHTS; i++) { color += calc_point_light(point_lights[i], normal, view_dir, diff_color, spec_color); }
+    vec3 ambient = ambient_light * diff_color;
+    vec3 color = calc_dir_light(dir_light, normal, view_dir, diff_color, spec_color);
+    //color += calc_spot_light(spot_light, normal, view_dir, diff_color, spec_color);
+    for (int i = 0; i < NUM_POINT_LIGHTS; i++) { color += calc_point_light(point_lights[i], normal, view_dir, diff_color, spec_color); }
     vec3 shadow_coords = (vs_shadow_pos.xyz / vs_shadow_pos.w) * 0.5 + 0.5;
     float shadow_bias = max(0.05 * (1.0 - dot(normal, normalize(-dir_light.dir))), 0.005);
     float shadow = shadow_coords.z - shadow_bias > texture(shadow_map, shadow_coords.xy).r ? 1.0 : 0.0;
     if(shadow_coords.z > 1.0) { shadow = 0.0; }
-    frag_color = vec4(color * (1.0 - shadow), 1.0);
+    frag_color = vec4(ambient + color * (1.0 - shadow), 1.0);
 }

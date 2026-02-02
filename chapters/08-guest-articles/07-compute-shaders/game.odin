@@ -46,12 +46,12 @@ game_init :: proc(game: ^Game) {
     ok : bool
     game.sp_screen, ok = gl.load_shaders_file(SHADER_SCREEN_VERT, SHADER_SCREEN_FRAG)
     if !ok {
-        log.errorf("Shader loading failed.")
+        log.errorf("Shader loading failed (%s %s).", SHADER_SCREEN_VERT, SHADER_SCREEN_FRAG)
         os.exit(1)
     }
     game.sp_compute, ok = gl.load_compute_file(SHADER_COMPUTE)
     if !ok {
-        log.errorf("Shader loading failed.")
+        log.errorf("Shader loading failed (%s).", SHADER_COMPUTE)
         os.exit(1)
     }
 
