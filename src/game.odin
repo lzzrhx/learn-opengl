@@ -11,7 +11,7 @@ import gl "vendor:OpenGL"
 
 Game :: struct {
     window:                glfw.WindowHandle,
-    sp_default:            u32,
+    sp_solid:              u32,
     sp_screen:             u32,
     sp_shadow:             u32,
     sp_light:              u32,
@@ -23,6 +23,7 @@ Game :: struct {
     primitives:            map[Primitive]Mesh,
     meshes:                map[string]Mesh,
     materials:             [dynamic]Material,
+    //textured_materials:    [dynamic]TexturedMaterial,
     models:                [dynamic]Model,
     shadowmap_fbo:         u32,
     shadowmap:             u32,
@@ -31,6 +32,13 @@ Game :: struct {
     prev_time:             f64,
     dt:                    f64,
     fps:                   int,    
+}
+
+
+gl_check_error :: proc(location := #caller_location) {
+    if err := gl.GetError(); err != gl.NO_ERROR {
+        log.errorf("OpenGL error! %s", gl.GL_Enum(err), location = location)
+    }
 }
 
 
@@ -54,9 +62,9 @@ game_init :: proc(game: ^Game) {
     
     // Load shaders
     ok : bool
-    game.sp_default, ok = gl.load_shaders_file(SHADER_DEFAULT_VERT, SHADER_DEFAULT_FRAG)
+    game.sp_solid, ok = gl.load_shaders_file(SHADER_SOLID_VERT, SHADER_SOLID_FRAG)
     if !ok {
-        log.errorf("Shader loading failed. (%s %s)", SHADER_DEFAULT_VERT, SHADER_DEFAULT_FRAG)
+        log.errorf("Shader loading failed. (%s %s)", SHADER_SOLID_VERT, SHADER_SOLID_FRAG)
         os.exit(1)
     }
     game.sp_light, ok = gl.load_shaders_file(SHADER_LIGHT_VERT, SHADER_LIGHT_FRAG)
@@ -111,11 +119,17 @@ game_setup :: proc(game: ^Game) {
     // Initialize materials
     material_new(
         &game.materials,
-        //diffuse = texture_load(DIFFUSE_TEXTURE),
-        //specular = texture_load(SPECULAR_TEXTURE),
         color = {0.5, 0.5, 0.5},
         shininess = 32.0,
     )
+    /*
+    material_new_textured(
+        &game.textured_materials,
+        diffuse = texture_load(TEXTURE_DIFFUSE),
+        specular = texture_load(TEXTURE_SPECULAR),
+        shininess = 32.0,
+    )
+    */
 
     // Initialize models
     model_new(
@@ -194,6 +208,7 @@ game_input :: proc(game: ^Game) {
 
 
 game_update :: proc(game: ^Game) {
+    gl_check_error()
     game.time = glfw.GetTime()
     game.dt = game.time - game.prev_time
     if game.dt > 0.0 && game.frame % 30 == 0 { game.fps = int(1.0 / game.dt) }
@@ -234,33 +249,33 @@ game_render :: proc(game: ^Game) {
     // Set view matrix
     view_mat := glsl.mat4LookAt(game.camera.pos, game.camera.pos + game.camera.front, game.camera.up)
     // Render entities
-    gl.UseProgram(game.sp_default)
-    shader_set_int(game.sp_default, "shadow_map", 0)
-    shader_set_mat4(game.sp_default, "shadow_mat", shadow_mat)
-    shader_set_mat4(game.sp_default, "projection_mat", projection_mat)
-    shader_set_mat4(game.sp_default, "view_mat", view_mat)
-    shader_set_vec3(game.sp_default, "view_pos", game.camera.pos)
-    shader_set_vec3(game.sp_default, "ambient_light", game.ambient_light)
-    shader_set_vec3(game.sp_default, "dir_light.dir", game.dir_light.dir)
-    shader_set_vec3(game.sp_default, "dir_light.diffuse", game.dir_light.diffuse)
-    shader_set_vec3(game.sp_default, "dir_light.specular", game.dir_light.specular)
-    //shader_set_vec3(game.sp_default,  "spot_light.pos",            game.spot_light.pos)
-    //shader_set_vec3(game.sp_default,  "spot_light.dir",            game.spot_light.dir)
-    //shader_set_vec3(game.sp_default,  "spot_light.diffuse",        game.spot_light.diffuse)
-    //shader_set_vec3(game.sp_default,  "spot_light.specular",       game.spot_light.specular)
-    //shader_set_float(game.sp_default, "spot_light.constant",       game.spot_light.constant)
-    //shader_set_float(game.sp_default, "spot_light.linear",         game.spot_light.linear)
-    //shader_set_float(game.sp_default, "spot_light.quadratic",      game.spot_light.quadratic)
-    //shader_set_float(game.sp_default, "spot_light.cutoff",         game.spot_light.cutoff)
-    //shader_set_float(game.sp_default, "spot_light.cutoff_outer",   game.spot_light.cutoff_outer)
-    shader_set_vec3(game.sp_default,  "point_lights[0].pos",       game.point_lights[0].pos)
-    shader_set_vec3(game.sp_default,  "point_lights[0].diffuse",   game.point_lights[0].diffuse)
-    shader_set_vec3(game.sp_default,  "point_lights[0].specular",  game.point_lights[0].specular)
-    shader_set_float(game.sp_default, "point_lights[0].constant",  game.point_lights[0].constant)
-    shader_set_float(game.sp_default, "point_lights[0].linear",    game.point_lights[0].linear)
-    shader_set_float(game.sp_default, "point_lights[0].quadratic", game.point_lights[0].quadratic)
+    gl.UseProgram(game.sp_solid)
+    shader_set_int(game.sp_solid, "shadow_map", 0)
+    shader_set_mat4(game.sp_solid, "shadow_mat", shadow_mat)
+    shader_set_mat4(game.sp_solid, "projection_mat", projection_mat)
+    shader_set_mat4(game.sp_solid, "view_mat", view_mat)
+    shader_set_vec3(game.sp_solid, "view_pos", game.camera.pos)
+    shader_set_vec3(game.sp_solid, "ambient_light", game.ambient_light)
+    shader_set_vec3(game.sp_solid, "dir_light.dir", game.dir_light.dir)
+    shader_set_vec3(game.sp_solid, "dir_light.diffuse", game.dir_light.diffuse)
+    shader_set_vec3(game.sp_solid, "dir_light.specular", game.dir_light.specular)
+    //shader_set_vec3(game.sp_solid,  "spot_light.pos",            game.spot_light.pos)
+    //shader_set_vec3(game.sp_solid,  "spot_light.dir",            game.spot_light.dir)
+    //shader_set_vec3(game.sp_solid,  "spot_light.diffuse",        game.spot_light.diffuse)
+    //shader_set_vec3(game.sp_solid,  "spot_light.specular",       game.spot_light.specular)
+    //shader_set_float(game.sp_solid, "spot_light.constant",       game.spot_light.constant)
+    //shader_set_float(game.sp_solid, "spot_light.linear",         game.spot_light.linear)
+    //shader_set_float(game.sp_solid, "spot_light.quadratic",      game.spot_light.quadratic)
+    //shader_set_float(game.sp_solid, "spot_light.cutoff",         game.spot_light.cutoff)
+    //shader_set_float(game.sp_solid, "spot_light.cutoff_outer",   game.spot_light.cutoff_outer)
+    shader_set_vec3(game.sp_solid,  "point_lights[0].pos",       game.point_lights[0].pos)
+    shader_set_vec3(game.sp_solid,  "point_lights[0].diffuse",   game.point_lights[0].diffuse)
+    shader_set_vec3(game.sp_solid,  "point_lights[0].specular",  game.point_lights[0].specular)
+    shader_set_float(game.sp_solid, "point_lights[0].constant",  game.point_lights[0].constant)
+    shader_set_float(game.sp_solid, "point_lights[0].linear",    game.point_lights[0].linear)
+    shader_set_float(game.sp_solid, "point_lights[0].quadratic", game.point_lights[0].quadratic)
     for &model in game.models {
-        model_render(&model, game.sp_default)
+        model_render(&model, game.sp_solid)
     }
 
     // Render light
@@ -282,13 +297,8 @@ game_render :: proc(game: ^Game) {
 
 
 game_exit :: proc(game: ^Game) {
-    defer glfw.Terminate()
-    defer delete(game.primitives)
-    defer delete(game.meshes)
-    defer delete(game.materials)
-    defer delete(game.models)
     free(game.point_lights)
-    gl.DeleteProgram(game.sp_default)
+    gl.DeleteProgram(game.sp_solid)
     gl.DeleteProgram(game.sp_screen)
     gl.DeleteProgram(game.sp_light)
     gl.DeleteProgram(game.sp_shadow)
@@ -298,4 +308,9 @@ game_exit :: proc(game: ^Game) {
     for key, &mesh in game.meshes {
         mesh_destroy(&mesh)
     }
+    delete(game.primitives)
+    delete(game.meshes)
+    delete(game.materials)
+    delete(game.models)
+    glfw.Terminate()
 }

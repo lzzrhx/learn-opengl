@@ -64,7 +64,7 @@
      [-]  6.2:  Lighting
      [-]  6.3:  IBL
    [-]  7: In Practice
-     [-]  7.1:  Debugging
+     [X]  7.1:  Debugging
      [-]  7.2:  Text Rendering
      [-]  7.3:  2D Game
    [-]  8: Guest Articles

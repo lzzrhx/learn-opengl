@@ -40,7 +40,8 @@ point_light_render :: proc(light: ^PointLight, shader_program: u32) {
     model_mat *= glsl.mat4Translate(light.pos)
     model_mat *= glsl.mat4Scale(light.scale)
     shader_set_mat4(shader_program, "model_mat", model_mat)
-    shader_set_vec3(shader_program, "color", light.diffuse)
+    shader_set_vec3(shader_program, "diffuse", light.diffuse)
+    shader_set_vec3(shader_program, "specular", light.specular)
     // Draw primitves
     gl.DrawElements(gl.TRIANGLES, light.mesh.num_indices, gl.UNSIGNED_INT, nil)
 }

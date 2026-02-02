@@ -1,14 +1,15 @@
 #version 330 core
 
-vec2 coords[3] = vec2[3](
-    vec2(-1.0, -1.0),
-    vec2( 3.0, -1.0),
-    vec2(-1.0,  3.0)
+vec4 coords[3] = vec4[3](
+    vec4(-1.0, -1.0, 0.0, 0.0),
+    vec4( 3.0, -1.0, 3.0, 0.0),
+    vec4(-1.0,  3.0, 0.0, 3.0)
 );
 
-out vec3 vs_pos;
+// Outs
+out vec2 vs_tex_coords;
 
 void main() {
-    gl_Position = vec4(coords[gl_VertexID], 0.0, 1.0);
-    vs_pos = vec3(coords[gl_VertexID], 0.0);
+    gl_Position = vec4(coords[gl_VertexID].xy, 0.0, 1.0);
+    vs_tex_coords = coords[gl_VertexID].zw;
 }

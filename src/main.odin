@@ -10,8 +10,8 @@ WINDOW_HEIGHT           :: 1080
 WINDOW_TITLE            :: "gl"
 GL_VERSION_MAJOR        :: 4
 GL_VERSION_MINOR        :: 3
-SHADER_DEFAULT_VERT     :: "./src/shaders/default.vert"
-SHADER_DEFAULT_FRAG     :: "./src/shaders/default.frag"
+SHADER_SOLID_VERT       :: "./src/shaders/solid.vert"
+SHADER_SOLID_FRAG       :: "./src/shaders/solid.frag"
 SHADER_LIGHT_VERT       :: "./src/shaders/light.vert"
 SHADER_LIGHT_FRAG       :: "./src/shaders/light.frag"
 SHADER_SHADOW_VERT      :: "./src/shaders/shadow.vert"
