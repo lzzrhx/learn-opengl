@@ -69,7 +69,6 @@ game_init :: proc(game: ^Game) {
     }
     // Enable depth testing
     gl.Enable(gl.DEPTH_TEST)
-    //gl.DepthFunc(gl.LESS)
     // Enable backface culling
     gl.Enable(gl.CULL_FACE)
     // Enable gamma correction

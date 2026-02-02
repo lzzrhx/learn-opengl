@@ -74,7 +74,7 @@
      [-]  8.4:  Scene
      [-]  8.5:  Tessellation
      [-]  8.6:  DSA
-     [-]  8.7:  Compute Shaders
+     [X]  8.7:  Compute Shaders
      [-]  8.8:  Phys. Based Bloom
      [-]  8.9:  Area Lights
 
