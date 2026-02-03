@@ -65,7 +65,7 @@
      [-]  6.3:  IBL
    [-]  7: In Practice
      [X]  7.1:  Debugging
-     [-]  7.2:  Text Rendering
+     [X]  7.2:  Text Rendering
      [-]  7.3:  2D Game
    [-]  8: Guest Articles
      [-]  8.1:  OIT

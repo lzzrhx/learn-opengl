@@ -235,10 +235,7 @@ game_update :: proc(game: ^Game) {
     game.time = glfw.GetTime()
     game.dt = game.time - game.prev_time
     if game.dt > 0.0 && game.frame % 30 == 0 { game.fps = int(1.0 / game.dt) }
-    if game.frame % 500 == 0 {
-        game.frame = 0
-        log.debugf("FPS: %d", game.fps)
-    }
+    game.frame %= 1000
     game.prev_time = game.time
     game.frame += 1
     game.point_lights[0].pos.x = math.sin_f32(f32(glfw.GetTime())) * 2;
@@ -316,26 +313,8 @@ game_render :: proc(game: ^Game) {
     color_b := f32(math.sin_f64(glfw.GetTime() * 0.4))
     shader_set_vec3(game.sp_font, "font_color", {color_r, color_g, color_b})
     scale :f32 = 0.03
-    txt := " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcd"
-    //txt := "abc"
-    font_mat: glsl.mat4
-    font_scale: glsl.vec3 = {scale, scale, scale}
-    for r, i in txt {
-        n := u32(r)
-        if n < 32 || n > 127 {
-            n = u32(rune('?'))
-        }
-        n -= 32
-        if n > 0 {
-            font_mat = 1
-            font_mat *= glsl.mat4Translate({-1.0+scale, 1.0-scale, 0.0} + {f32(i)*scale, 0.0, 0.0})
-            font_mat *= glsl.mat4Scale(font_scale)
-            shader_set_mat4(game.sp_font, "font_mat", font_mat)
-            shader_set_int(game.sp_font, "character", i32(n))
-            gl.DrawArrays(gl.TRIANGLE_FAN, 0, 4)
-            //log.debugf("%v %v", r, i)
-        }
-    }
+    font_render_int(game, game.fps, 0.0, scale)
+    font_render_string(game, "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcd", 1.0, scale)
 
     // Render triangle that cover the entire screen
     //gl.UseProgram(game.shader_program_screen)
