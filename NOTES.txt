@@ -94,13 +94,20 @@
 - Documentation:
   + GLFW Documentation - https://www.glfw.org/docs/latest/
   + OpenGL Documentation - https://docs.gl/
+  + Odin, core:math/linalg/glsl - https://pkg.odin-lang.org/core/math/linalg/glsl/
+  + Odin, vendor:glfw - https://pkg.odin-lang.org/vendor/glfw/
+  + Odin, vendor:OpenGL - https://pkg.odin-lang.org/vendor/OpenGL/
+
+- SIGGRAPH University : "An Introduction to OpenGL Programming"
+  + https://youtu.be/6-9XFm7XAT8?si=nGtkCfQ4z0qUOciL
 
 - Videos:
   + Graphics Programming - https://www.youtube.com/playlist?list=PLUznfNKscdcO_CqskY66YaXqARepJwanV
   + 3Blue1Brown, Essence of linear algebra - https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab
-  + OpenGL Course, Create 3D and 2D Graphics With C++ - https://youtu.be/45MIykWJ-C4
+  + Brian Will, OpenGL - https://www.youtube.com/playlist?list=PLIbUZ3URbL0ESKHrvzXuHjrcLi7gxhBby
   + Jamie King, 3D Computer Graphics Using OpenGL - https://www.youtube.com/playlist?list=PLRwVmtr-pp06qT6ckboaOhnm9FxmzHpbY
   + The Cherno, OpenGL - https://www.youtube.com/playlist?list=PLlrATfBNZ98foTJPJ_Ev03o2oq3-GGOS2
+  + OpenGL Course, Create 3D and 2D Graphics With C++ - https://youtu.be/45MIykWJ-C4
 
 - Books (online and free):
   + Physically Based Rendering: From Theory to Implementation - https://pbr-book.org/4ed/contents

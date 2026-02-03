@@ -1,5 +1,4 @@
 package main
-
 import "core:fmt"
 import "core:strings"
 import "core:os"
@@ -12,6 +11,7 @@ import gl "vendor:OpenGL"
 Game :: struct {
     window:                glfw.WindowHandle,
     sp_solid:              u32,
+    sp_font:               u32,
     sp_screen:             u32,
     sp_shadow:             u32,
     sp_light:              u32,
@@ -31,7 +31,10 @@ Game :: struct {
     time:                  f64,
     prev_time:             f64,
     dt:                    f64,
-    fps:                   int,    
+    fps:                   int,
+    font_texture:          u32,
+    tex_id_shadowmap:      u32,
+    tex_id_font:           u32,
 }
 
 
@@ -67,6 +70,11 @@ game_init :: proc(game: ^Game) {
         log.errorf("Shader loading failed. (%s %s)", SHADER_SOLID_VERT, SHADER_SOLID_FRAG)
         os.exit(1)
     }
+    game.sp_font, ok = gl.load_shaders_file(SHADER_FONT_VERT, SHADER_FONT_FRAG)
+    if !ok {
+        log.errorf("Shader loading failed. (%s %s)", SHADER_FONT_VERT, SHADER_FONT_FRAG)
+        os.exit(1)
+    }
     game.sp_light, ok = gl.load_shaders_file(SHADER_LIGHT_VERT, SHADER_LIGHT_FRAG)
     if !ok {
         log.errorf("Shader loading failed. (%s %s)", SHADER_LIGHT_VERT, SHADER_LIGHT_FRAG)
@@ -84,10 +92,9 @@ game_init :: proc(game: ^Game) {
     }
     
     // OpenGL settings
-    gl.Enable(gl.DEPTH_TEST)
     gl.Enable(gl.CULL_FACE)
-    //gl.Enable(gl.BLEND)
-    //gl.BlendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
+    gl.Enable(gl.BLEND)
+    gl.BlendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
     if OPTION_GAMMA_CORRECTION { gl.Enable(gl.FRAMEBUFFER_SRGB) }
     if OPTION_ANTI_ALIAS { gl.Enable(gl.MULTISAMPLE) }
 
@@ -110,6 +117,21 @@ game_init :: proc(game: ^Game) {
     
     // Load primitive meshes
     mesh_load_primitives(&game.primitives);
+    
+    // Load font
+    game.font_texture = texture_load(TEXTURE_FONT, filtering = false)
+
+    // Set textures
+    game.tex_id_font = 0;
+    game.tex_id_shadowmap = 1;
+    gl.ActiveTexture(gl.TEXTURE0 + game.tex_id_font)
+    gl.BindTexture(gl.TEXTURE_2D, game.font_texture)
+    gl.ActiveTexture(gl.TEXTURE0 + game.tex_id_shadowmap)
+    gl.BindTexture(gl.TEXTURE_2D, game.shadowmap)
+    gl.UseProgram(game.sp_font)
+    shader_set_int(game.sp_font, "font_texture", i32(game.tex_id_font))
+    gl.UseProgram(game.sp_solid)
+    shader_set_int(game.sp_solid, "shadow_map", i32(game.tex_id_shadowmap))
 }
 
 game_setup :: proc(game: ^Game) {
@@ -182,6 +204,7 @@ game_setup :: proc(game: ^Game) {
     //game.spot_light.quadratic    = 0.032
     //game.spot_light.cutoff       = math.cos_f32(glsl.radians_f32(12.5))
     //game.spot_light.cutoff_outer = math.cos_f32(glsl.radians_f32(17.5))
+
 }
 
 
@@ -225,6 +248,7 @@ game_update :: proc(game: ^Game) {
 
 game_render :: proc(game: ^Game) {
     gl.ClearColor(0.2, 0.3, 0.3, 1.0)
+    gl.Enable(gl.DEPTH_TEST)
 
     // Render to shadowmap
     gl.Enable(gl.DEPTH_TEST)
@@ -250,7 +274,6 @@ game_render :: proc(game: ^Game) {
     view_mat := glsl.mat4LookAt(game.camera.pos, game.camera.pos + game.camera.front, game.camera.up)
     // Render entities
     gl.UseProgram(game.sp_solid)
-    shader_set_int(game.sp_solid, "shadow_map", 0)
     shader_set_mat4(game.sp_solid, "shadow_mat", shadow_mat)
     shader_set_mat4(game.sp_solid, "projection_mat", projection_mat)
     shader_set_mat4(game.sp_solid, "view_mat", view_mat)
@@ -277,15 +300,43 @@ game_render :: proc(game: ^Game) {
     for &model in game.models {
         model_render(&model, game.sp_solid)
     }
-
-    // Render light
+    // Render lights
     gl.UseProgram(game.sp_light)
     shader_set_mat4(game.sp_light, "projection_mat", projection_mat)
     shader_set_mat4(game.sp_light, "view_mat", view_mat)
     for &light in game.point_lights {
         point_light_render(&light, game.sp_light)
     }
-   
+    
+    // Render font
+    gl.Disable(gl.DEPTH_TEST)
+    gl.UseProgram(game.sp_font)
+    color_r := f32(math.sin_f64(glfw.GetTime() * 0.2))
+    color_g := f32(math.sin_f64(glfw.GetTime() * 0.3))
+    color_b := f32(math.sin_f64(glfw.GetTime() * 0.4))
+    shader_set_vec3(game.sp_font, "font_color", {color_r, color_g, color_b})
+    scale :f32 = 0.03
+    txt := " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcd"
+    //txt := "abc"
+    font_mat: glsl.mat4
+    font_scale: glsl.vec3 = {scale, scale, scale}
+    for r, i in txt {
+        n := u32(r)
+        if n < 32 || n > 127 {
+            n = u32(rune('?'))
+        }
+        n -= 32
+        if n > 0 {
+            font_mat = 1
+            font_mat *= glsl.mat4Translate({-1.0+scale, 1.0-scale, 0.0} + {f32(i)*scale, 0.0, 0.0})
+            font_mat *= glsl.mat4Scale(font_scale)
+            shader_set_mat4(game.sp_font, "font_mat", font_mat)
+            shader_set_int(game.sp_font, "character", i32(n))
+            gl.DrawArrays(gl.TRIANGLE_FAN, 0, 4)
+            //log.debugf("%v %v", r, i)
+        }
+    }
+
     // Render triangle that cover the entire screen
     //gl.UseProgram(game.shader_program_screen)
     //shader_set_int(game.shader_program_screen, "shadow_map", 0)
@@ -302,6 +353,7 @@ game_exit :: proc(game: ^Game) {
     gl.DeleteProgram(game.sp_screen)
     gl.DeleteProgram(game.sp_light)
     gl.DeleteProgram(game.sp_shadow)
+    gl.DeleteProgram(game.sp_font)
     for key, &mesh in game.primitives {
         mesh_destroy(&mesh)
     }

@@ -1,5 +1,4 @@
 package main
-
 import "core:log"
 import "core:mem"
 import "vendor:glfw"
@@ -18,15 +17,18 @@ SHADER_SHADOW_VERT      :: "./src/shaders/shadow.vert"
 SHADER_EMPTY_FRAG       :: "./src/shaders/empty.frag"
 SHADER_SCREEN_VERT      :: "./src/shaders/screen.vert"
 SHADER_SCREEN_FRAG      :: "./src/shaders/screen.frag"
+SHADER_FONT_VERT        :: "./src/shaders/font.vert"
+SHADER_FONT_FRAG        :: "./src/shaders/font.frag"
 TEXTURE_DIFFUSE         :: "./assets/container2.png"
 TEXTURE_SPECULAR        :: "./assets/container2-specular.png"
 NUM_POINT_LIGHTS        :: 1
-SHADOWMAP_SIZE          :: 2048
+SHADOWMAP_SIZE          :: 4096
 CLIP_NEAR               :: 0.1
 CLIP_FAR                :: 100
-OPTION_VSYNC            :: true
+OPTION_VSYNC            :: false
 OPTION_ANTI_ALIAS       :: true
 OPTION_GAMMA_CORRECTION :: true
+TEXTURE_FONT            :: "./assets/font.png"
 
 
 main :: proc() {
