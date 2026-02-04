@@ -13,9 +13,9 @@ Game :: struct {
     window:                glfw.WindowHandle,
     sp_solid:              u32,
     sp_font:               u32,
-    //sp_screen:             u32,
+    sp_screen:             u32,
     sp_shadow_dir:         u32,
-    //sp_shadow_point:         u32,
+    sp_shadow_point:         u32,
     sp_light:              u32,
     ambient_light:         glsl.vec3,
     dir_light:             ^DirLight,
@@ -28,9 +28,9 @@ Game :: struct {
     //textured_materials:    [dynamic]TexturedMaterial,
     models:                [dynamic]Model,
     shadowmap_dir:         u32,
-    //shadowmap_point:       u32,
+    shadowmap_point:       u32,
     shadowmap_dir_fbo:     u32,
-    //shadowmap_point_fbo:   u32,
+    shadowmap_point_fbo:   u32,
     frame:                 u32,
     time:                  f64,
     prev_time:             f64,
@@ -40,8 +40,8 @@ Game :: struct {
     ndc_pixel_w:           f32,
     ndc_pixel_h:           f32,
     dir_shadow_projection: glsl.mat4,
-    //point_shadow_projection: glsl.mat4,
-    //point_shadow_mat: ^[6]glsl.mat4,
+    point_shadow_projection: glsl.mat4,
+    point_shadow_mat: ^[6]glsl.mat4,
 }
 
 
@@ -77,8 +77,8 @@ game_init :: proc(game: ^Game) {
     shader_load_vs_fs(&game.sp_font, SHADER_FONT_VERT, SHADER_FONT_FRAG)
     shader_load_vs_fs(&game.sp_light, SHADER_LIGHT_VERT, SHADER_LIGHT_FRAG)
     shader_load_vs_fs(&game.sp_shadow_dir, SHADER_SHADOW_DIR_VERT, SHADER_EMPTY_FRAG)
-    //shader_load_vs_gs_fs(&game.sp_shadow_point, SHADER_SHADOW_POINT_VERT, SHADER_SHADOW_POINT_GEOM, SHADER_SHADOW_POINT_FRAG)
-    //shader_load_vs_fs(&game.sp_screen, SHADER_SCREEN_VERT, SHADER_SCREEN_FRAG)
+    shader_load_vs_gs_fs(&game.sp_shadow_point, SHADER_SHADOW_POINT_VERT, SHADER_SHADOW_POINT_GEOM, SHADER_SHADOW_POINT_FRAG)
+    shader_load_vs_fs(&game.sp_screen, SHADER_SCREEN_VERT, SHADER_SCREEN_FRAG)
     
     // OpenGL settings
     gl.Enable(gl.CULL_FACE)
@@ -106,7 +106,6 @@ game_init :: proc(game: ^Game) {
     game.dir_shadow_projection = glsl.mat4Ortho3d(-10.0, 10.0, -10.0, 10.0, CLIP_NEAR, DIR_SHADOW_CLIP_FAR)
 
     // Point light shadowmap setup
-    /*
     gl.GenFramebuffers(1, &game.shadowmap_point_fbo)
     gl.GenTextures(1, &game.shadowmap_point)
     gl.BindTexture(gl.TEXTURE_CUBE_MAP, game.shadowmap_point)
@@ -129,8 +128,7 @@ game_init :: proc(game: ^Game) {
     shader_set_float(game.sp_solid, "far_plane", POINT_SHADOW_CLIP_FAR)
     game.point_shadow_mat = new([6]glsl.mat4)
     game.point_shadow_projection = glsl.mat4Perspective(glsl.radians_f32(90), 1.0, POINT_SHADOW_CLIP_NEAR, POINT_SHADOW_CLIP_FAR)
-    */
-
+    
     // Load primitive meshes
     mesh_load_primitives(&game.primitives);
     
@@ -147,10 +145,10 @@ game_init :: proc(game: ^Game) {
     gl.ActiveTexture(gl.TEXTURE1)
     gl.BindTexture(gl.TEXTURE_2D, game.shadowmap_dir)
     shader_set_int(game.sp_solid, "shadow_map_point", 2)
-    //gl.ActiveTexture(gl.TEXTURE2)
-    //gl.BindTexture(gl.TEXTURE_CUBE_MAP, game.shadowmap_point)
-    //gl.UseProgram(game.sp_screen)
-    //shader_set_int(game.sp_screen, "texture_render", 1)
+    gl.ActiveTexture(gl.TEXTURE2)
+    gl.BindTexture(gl.TEXTURE_CUBE_MAP, game.shadowmap_point)
+    gl.UseProgram(game.sp_screen)
+    shader_set_int(game.sp_screen, "texture_render", 1)
 }
 
 game_setup :: proc(game: ^Game) {
@@ -296,7 +294,6 @@ game_render :: proc(game: ^Game) {
         model_render(&model, game.sp_shadow_dir, shadow_pass = true)
     }
     // Render to point light shadowmap
-    /*
     gl.BindFramebuffer(gl.FRAMEBUFFER, game.shadowmap_point_fbo)
     gl.Clear(gl.DEPTH_BUFFER_BIT)
     game.point_shadow_mat[0] = glsl.mat4LookAt(game.point_lights[0].pos, game.point_lights[0].pos + { 1.0,  0.0,  0.0}, {0.0, -1.0,  0.0})
@@ -316,7 +313,6 @@ game_render :: proc(game: ^Game) {
     for &model in game.models {
         model_render(&model, game.sp_shadow_point, shadow_pass = true)
     }
-    */
 
     // Render scene
     gl.Viewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT)
@@ -379,12 +375,12 @@ game_render :: proc(game: ^Game) {
 
 game_exit :: proc(game: ^Game) {
     free(game.point_lights)
-    //free(game.point_shadow_mat)
+    free(game.point_shadow_mat)
     gl.DeleteProgram(game.sp_solid)
-    //gl.DeleteProgram(game.sp_screen)
+    gl.DeleteProgram(game.sp_screen)
     gl.DeleteProgram(game.sp_light)
     gl.DeleteProgram(game.sp_shadow_dir)
-    //gl.DeleteProgram(game.sp_shadow_point)
+    gl.DeleteProgram(game.sp_shadow_point)
     gl.DeleteProgram(game.sp_font)
     for key, &mesh in game.primitives {
         mesh_destroy(&mesh)

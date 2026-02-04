@@ -45,8 +45,8 @@ in vec4 vs_dir_shadow_pos;
 
 // Uniform
 uniform sampler2D shadow_map_dir;
-//uniform samplerCube shadow_map_point;
-//uniform float far_plane;
+uniform samplerCube shadow_map_point;
+uniform float far_plane;
 uniform vec3 ambient_light;
 uniform vec3 view_pos;
 uniform Material material;
@@ -112,7 +112,6 @@ void main()
         shadow += current_depth - shadow_bias > closest_depth && shadow_coords.z <= 1.0 ? 1.0 - shadow_light * 2 : 0.0;
     }
     // Point shadow(s)
-    /*
     for (int i = 0; i < NUM_POINT_LIGHTS; i++) {
         float shadow_light = diff_light_dir.x + diff_light_dir.y + diff_light_dir.z;
         vec3 frag_to_light = vs_pos - point_lights[i].pos;
@@ -121,7 +120,6 @@ void main()
         float shadow_bias = max(0.05 * (1.0 - dot(normal, normalize(point_lights[i].pos - vs_pos))), 0.005);
         shadow += current_depth - shadow_bias > closest_depth && current_depth < far_plane ? 1.0 - shadow_light : 0.0;
     }
-    */
 
     // Output final color
     out_frag_color = vec4((diff_light * diff_color + spec_light * spec_color) * (1.0 - clamp(shadow - ((ambient_light.x + ambient_light.y + ambient_light.z) / 3), 0.0, 1.0)), 1.0);

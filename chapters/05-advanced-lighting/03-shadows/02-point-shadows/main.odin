@@ -15,9 +15,9 @@ SHADER_LIGHT_VERT        :: "./src/glsl/light.vert"
 SHADER_LIGHT_FRAG        :: "./src/glsl/light.frag"
 SHADER_NORMALS_GEOM      :: "./src/glsl/normals.geom"
 SHADER_SHADOW_DIR_VERT   :: "./src/glsl/shadow-dir.vert"
-//SHADER_SHADOW_POINT_VERT :: "./src/glsl/shadow-point.vert"
-//SHADER_SHADOW_POINT_GEOM :: "./src/glsl/shadow-point.geom"
-//SHADER_SHADOW_POINT_FRAG :: "./src/glsl/shadow-point.frag"
+SHADER_SHADOW_POINT_VERT :: "./src/glsl/shadow-point.vert"
+SHADER_SHADOW_POINT_GEOM :: "./src/glsl/shadow-point.geom"
+SHADER_SHADOW_POINT_FRAG :: "./src/glsl/shadow-point.frag"
 SHADER_EMPTY_FRAG        :: "./src/glsl/empty.frag"
 SHADER_SCREEN_VERT       :: "./src/glsl/screen.vert"
 SHADER_SCREEN_FRAG       :: "./src/glsl/screen.frag"
@@ -29,8 +29,8 @@ NUM_POINT_LIGHTS         :: 1
 SHADOWMAP_SIZE           :: 4096
 CLIP_NEAR                :: 0.1
 CLIP_FAR                 :: 100
-//POINT_SHADOW_CLIP_NEAR   :: 0.01
-//POINT_SHADOW_CLIP_FAR    :: 10
+POINT_SHADOW_CLIP_NEAR   :: 0.01
+POINT_SHADOW_CLIP_FAR    :: 10
 DIR_SHADOW_CLIP_FAR      :: 20
 OPTION_VSYNC             :: false
 OPTION_ANTI_ALIAS        :: true
