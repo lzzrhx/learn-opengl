@@ -316,9 +316,8 @@ game_render :: proc(game: ^Game) {
     font_render_string(game, 4, 1048, 2, {f32(math.sin_f64(glfw.GetTime() * 0.2)), f32(math.sin_f64(glfw.GetTime() * 0.3)), f32(math.sin_f64(glfw.GetTime() * 0.4))}, "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~")
 
     // Render triangle that cover the entire screen
-    //gl.UseProgram(game.shader_program_screen)
-    //shader_set_int(game.shader_program_screen, "shadow_map", 0)
-    //gl.DrawArrays(gl.TRIANGLES, 0, 3)
+    //gl.UseProgram(game.sp_screen)
+    //gl.DrawArrays(gl.TRIANGLE_FAN, 0, 4)
  
     // Swap buffers
     glfw.SwapBuffers(game.window)
