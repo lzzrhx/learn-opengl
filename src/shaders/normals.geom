@@ -1,12 +1,17 @@
 #version 330 core
-layout (triangles) in;
-layout (line_strip, max_vertices = 6) out;
 
-in vs_normal; 
-
+// Const
 const float MAGNITUDE = 0.2;
 
+// In
+layout (triangles) in;
+in vs_normal; 
+
+// Uniform
 uniform mat4 projection_mat;
+
+//Out
+layout (line_strip, max_vertices = 6) out;
 
 void generate_line(int index)
 {
@@ -19,7 +24,7 @@ void generate_line(int index)
 
 void main()
 {
-    generate_line(0); // first vertex normal
-    generate_line(1); // second vertex normal
-    generate_line(2); // third vertex normal
+    generate_line(0);
+    generate_line(1);
+    generate_line(2);
 }

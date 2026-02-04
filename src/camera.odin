@@ -1,6 +1,6 @@
 package main
-
 import "core:math/linalg/glsl"
+
 
 Camera :: struct {
     pos:   glsl.vec3,

@@ -8,6 +8,7 @@ import "vendor:glfw"
 import "core:math/linalg/glsl"
 import gl "vendor:OpenGL"
 
+
 Game :: struct {
     window:                glfw.WindowHandle,
     sp_solid:              u32,
@@ -31,10 +32,10 @@ Game :: struct {
     time:                  f64,
     prev_time:             f64,
     dt:                    f64,
-    fps:                   int,
+    fps:                   u32,
     font_texture:          u32,
-    tex_id_shadowmap:      u32,
-    tex_id_font:           u32,
+    ndc_pixel_w:           f32,
+    ndc_pixel_h:           f32,
 }
 
 
@@ -62,6 +63,8 @@ game_init :: proc(game: ^Game) {
     if !OPTION_VSYNC { glfw.SwapInterval(0) }
     gl.load_up_to(GL_VERSION_MAJOR, GL_VERSION_MINOR, glfw.gl_set_proc_address)
     gl.Viewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT)
+    game.ndc_pixel_w = 1.0 / WINDOW_WIDTH
+    game.ndc_pixel_h = 1.0 / WINDOW_HEIGHT
     
     // Load shaders
     ok : bool
@@ -122,16 +125,15 @@ game_init :: proc(game: ^Game) {
     game.font_texture = texture_load(TEXTURE_FONT, filtering = false)
 
     // Set textures
-    game.tex_id_font = 0;
-    game.tex_id_shadowmap = 1;
-    gl.ActiveTexture(gl.TEXTURE0 + game.tex_id_font)
-    gl.BindTexture(gl.TEXTURE_2D, game.font_texture)
-    gl.ActiveTexture(gl.TEXTURE0 + game.tex_id_shadowmap)
-    gl.BindTexture(gl.TEXTURE_2D, game.shadowmap)
     gl.UseProgram(game.sp_font)
-    shader_set_int(game.sp_font, "font_texture", i32(game.tex_id_font))
+    shader_set_int(game.sp_font, "font_texture", 0)
+    gl.ActiveTexture(gl.TEXTURE0)
+    gl.BindTexture(gl.TEXTURE_2D, game.font_texture)
+
     gl.UseProgram(game.sp_solid)
-    shader_set_int(game.sp_solid, "shadow_map", i32(game.tex_id_shadowmap))
+    shader_set_int(game.sp_solid, "shadow_map", 1)
+    gl.ActiveTexture(gl.TEXTURE1)
+    gl.BindTexture(gl.TEXTURE_2D, game.shadowmap)
 }
 
 game_setup :: proc(game: ^Game) {
@@ -234,8 +236,10 @@ game_update :: proc(game: ^Game) {
     gl_check_error()
     game.time = glfw.GetTime()
     game.dt = game.time - game.prev_time
-    if game.dt > 0.0 && game.frame % 30 == 0 { game.fps = int(1.0 / game.dt) }
-    game.frame %= 1000
+    if game.dt > 0.0 && game.frame > game.fps {
+        game.fps = u32(1.0 / game.dt)
+        game.frame = 0
+    }
     game.prev_time = game.time
     game.frame += 1
     game.point_lights[0].pos.x = math.sin_f32(f32(glfw.GetTime())) * 2;
@@ -308,13 +312,8 @@ game_render :: proc(game: ^Game) {
     // Render font
     gl.Disable(gl.DEPTH_TEST)
     gl.UseProgram(game.sp_font)
-    color_r := f32(math.sin_f64(glfw.GetTime() * 0.2))
-    color_g := f32(math.sin_f64(glfw.GetTime() * 0.3))
-    color_b := f32(math.sin_f64(glfw.GetTime() * 0.4))
-    shader_set_vec3(game.sp_font, "font_color", {color_r, color_g, color_b})
-    scale :f32 = 0.03
-    font_render_int(game, game.fps, 0.0, scale)
-    font_render_string(game, "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcd", 1.0, scale)
+    font_render_u32(game, 4, 0, 2, {1.0, 1.0, 1.0}, game.fps)
+    font_render_string(game, 4, 1048, 2, {f32(math.sin_f64(glfw.GetTime() * 0.2)), f32(math.sin_f64(glfw.GetTime() * 0.3)), f32(math.sin_f64(glfw.GetTime() * 0.4))}, "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~")
 
     // Render triangle that cover the entire screen
     //gl.UseProgram(game.shader_program_screen)

@@ -29,6 +29,8 @@ OPTION_VSYNC            :: false
 OPTION_ANTI_ALIAS       :: true
 OPTION_GAMMA_CORRECTION :: true
 TEXTURE_FONT            :: "./assets/font.png"
+FONT_WIDTH              :: 8
+FONT_HEIGHT             :: 16
 
 
 main :: proc() {

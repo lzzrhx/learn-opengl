@@ -1,13 +1,13 @@
 #version 330 core
 
-//Uniforms
+//Uniform
 uniform vec3 diffuse;
 uniform vec3 specular;
 
-// Outs
-out vec4 FragColor;
+// Out
+out vec4 out_frag_color;
 
 void main()
 {
-    FragColor = vec4(diffuse, 1.0);
+    out_frag_color = vec4(diffuse, 1.0);
 }
