@@ -13,24 +13,18 @@ Game :: struct {
     window:                glfw.WindowHandle,
     sp_solid:              u32,
     sp_font:               u32,
-    //sp_screen:             u32,
     sp_shadow_dir:         u32,
-    //sp_shadow_point:         u32,
     sp_light:              u32,
     ambient_light:         glsl.vec3,
     dir_light:             ^DirLight,
     point_lights:          ^[NUM_POINT_LIGHTS]PointLight,
-    //spot_light:            ^SpotLight,
     camera:                ^Camera,
     primitives:            map[Primitive]Mesh,
     meshes:                map[string]Mesh,
     materials:             [dynamic]Material,
-    //textured_materials:    [dynamic]TexturedMaterial,
     models:                [dynamic]Model,
     shadowmap_dir:         u32,
-    //shadowmap_point:       u32,
     shadowmap_dir_fbo:     u32,
-    //shadowmap_point_fbo:   u32,
     frame:                 u32,
     time:                  f64,
     prev_time:             f64,
@@ -40,6 +34,12 @@ Game :: struct {
     ndc_pixel_w:           f32,
     ndc_pixel_h:           f32,
     dir_shadow_projection: glsl.mat4,
+    //sp_screen:             u32,
+    //sp_shadow_point:         u32,
+    //spot_light:            ^SpotLight,
+    //textured_materials:    [dynamic]TexturedMaterial,
+    //shadowmap_point:       u32,
+    //shadowmap_point_fbo:   u32,
     //point_shadow_projection: glsl.mat4,
     //point_shadow_mat: ^[6]glsl.mat4,
 }
@@ -146,7 +146,7 @@ game_init :: proc(game: ^Game) {
     shader_set_int(game.sp_solid, "shadow_map_dir", 1)
     gl.ActiveTexture(gl.TEXTURE1)
     gl.BindTexture(gl.TEXTURE_2D, game.shadowmap_dir)
-    shader_set_int(game.sp_solid, "shadow_map_point", 2)
+    //shader_set_int(game.sp_solid, "shadow_map_point", 2)
     //gl.ActiveTexture(gl.TEXTURE2)
     //gl.BindTexture(gl.TEXTURE_CUBE_MAP, game.shadowmap_point)
     //gl.UseProgram(game.sp_screen)
@@ -378,14 +378,16 @@ game_render :: proc(game: ^Game) {
 
 
 game_exit :: proc(game: ^Game) {
-    free(game.point_lights)
     //free(game.point_shadow_mat)
-    gl.DeleteProgram(game.sp_solid)
     //gl.DeleteProgram(game.sp_screen)
+    //gl.DeleteProgram(game.sp_shadow_point)
+    free(game.point_lights)
+    gl.DeleteProgram(game.sp_solid)
+    gl.DeleteProgram(game.sp_font)
     gl.DeleteProgram(game.sp_light)
     gl.DeleteProgram(game.sp_shadow_dir)
-    //gl.DeleteProgram(game.sp_shadow_point)
-    gl.DeleteProgram(game.sp_font)
+    gl.DeleteTextures(1, &game.shadowmap_dir)
+    gl.DeleteTextures(1, &game.font_texture)
     for key, &mesh in game.primitives {
         mesh_destroy(&mesh)
     }
