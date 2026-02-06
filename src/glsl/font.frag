@@ -4,13 +4,13 @@
 in vec2 vs_tex_coords;
 
 // Uniform
-uniform sampler2D font_texture;
-uniform vec3 font_color;
+uniform sampler2D font_tex;
+uniform vec3 color;
 
 // Out
 out vec4 out_frag_color;
 
 void main()
 {
-    out_frag_color = vec4(font_color, texture(font_texture, vs_tex_coords).r);
+    out_frag_color = vec4(color, texture(font_tex, vs_tex_coords).r);
 }

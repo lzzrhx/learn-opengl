@@ -11,6 +11,7 @@ import gl "vendor:OpenGL"
 
 Game :: struct {
     window:                glfw.WindowHandle,
+    ndc_pixel:             glsl.vec2,
     sp_solid:              u32,
     sp_font:               u32,
     sp_shadow_dir:         u32,
@@ -30,10 +31,13 @@ Game :: struct {
     prev_time:             f64,
     dt:                    f64,
     fps:                   u32,
-    font_texture:          u32,
     ndc_pixel_w:           f32,
     ndc_pixel_h:           f32,
     dir_shadow_projection: glsl.mat4,
+    font_tex:              u32,
+    font_vao:              u32,
+    font_vbo:              u32,
+    font_chars:         ^[FONT_MAX_CHARS]u32,
     //sp_screen:             u32,
     //sp_shadow_point:         u32,
     //spot_light:            ^SpotLight,
@@ -69,8 +73,7 @@ game_init :: proc(game: ^Game) {
     if !OPTION_VSYNC { glfw.SwapInterval(0) }
     gl.load_up_to(GL_VERSION_MAJOR, GL_VERSION_MINOR, glfw.gl_set_proc_address)
     gl.Viewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT)
-    game.ndc_pixel_w = 1.0 / WINDOW_WIDTH
-    game.ndc_pixel_h = 1.0 / WINDOW_HEIGHT
+    game.ndc_pixel = {2.0 / WINDOW_WIDTH, 2.0 / WINDOW_HEIGHT}
     
     // Load shaders
     shader_load_vs_fs(&game.sp_solid, SHADER_SOLID_VERT, SHADER_SOLID_FRAG)
@@ -134,14 +137,31 @@ game_init :: proc(game: ^Game) {
     // Load primitive meshes
     mesh_load_primitives(&game.primitives);
     
-    // Load font
-    game.font_texture = texture_load(TEXTURE_FONT, filtering = false)
+    // Load meshes
+    gltf_load(&game.meshes, "bunny", "./assets/bunny.glb")
+    
+    // Font setup
+    game.font_chars = new([FONT_MAX_CHARS]u32)
+    game.font_tex = texture_load(FONT_PATH, filtering = false)
+    gl.GenVertexArrays(1, &game.font_vao)
+    gl.BindVertexArray(game.font_vao)
+    gl.GenBuffers(1, &game.font_vbo)
+    gl.BindBuffer(gl.ARRAY_BUFFER, game.font_vbo)
+    gl.BufferData(gl.ARRAY_BUFFER, FONT_MAX_CHARS * size_of(u32), raw_data(game.font_chars), gl.STATIC_DRAW)
+    gl.EnableVertexAttribArray(0)
+    gl.VertexAttribIPointer(0, 1, gl.UNSIGNED_INT, size_of(u32), 0)
+    gl.VertexAttribDivisor(0, 1)
+    gl.UseProgram(game.sp_font)
+    shader_set_float(game.sp_font, "spacing", FONT_SPACING)
+    shader_set_vec2(game.sp_font, "ndc_pixel", game.ndc_pixel)
+    shader_set_vec2(game.sp_font, "size", {FONT_WIDTH, FONT_HEIGHT})
+    gl.BindVertexArray(0)
 
     // Set textures
     gl.UseProgram(game.sp_font)
-    shader_set_int(game.sp_font, "font_texture", 0)
+    shader_set_int(game.sp_font, "font_tex", 0)
     gl.ActiveTexture(gl.TEXTURE0)
-    gl.BindTexture(gl.TEXTURE_2D, game.font_texture)
+    gl.BindTexture(gl.TEXTURE_2D, game.font_tex)
     gl.UseProgram(game.sp_solid)
     shader_set_int(game.sp_solid, "shadow_map_dir", 1)
     gl.ActiveTexture(gl.TEXTURE1)
@@ -154,8 +174,6 @@ game_init :: proc(game: ^Game) {
 }
 
 game_setup :: proc(game: ^Game) {
-    // Load meshes
-    gltf_load(&game.meshes, "bunny", "./assets/bunny.glb")
 
     // Initialize materials
     material_new(
@@ -259,7 +277,6 @@ game_input :: proc(game: ^Game) {
 
 
 game_update :: proc(game: ^Game) {
-    gl_check_error()
     game.time = glfw.GetTime()
     game.dt = game.time - game.prev_time
     if game.dt > 0.0 && game.frame > game.fps {
@@ -363,10 +380,12 @@ game_render :: proc(game: ^Game) {
     }
     
     // Render font
+    gl.BindVertexArray(game.font_vao)
     gl.Disable(gl.DEPTH_TEST)
     gl.UseProgram(game.sp_font)
-    font_render_u32(game, 4, 0, 2, game.fps >= 50 ? {0.2, 0.8, 0.2} : (game.fps >= 30 ? {0.8, 0.8, 0.2} : {0.8, 0.2, 0.2} ), game.fps)
-    font_render_string(game, 4, 1048, 2, color, "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~")
+    font_render(game, 2, 0, game.fps, 2, game.fps >= 50 ? {0.2, 0.8, 0.2} : (game.fps >= 30 ? {0.8, 0.8, 0.2} : {0.8, 0.2, 0.2} ))
+    font_render(game, 2, 1080-32, "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~", 2, color)
+    gl.BindVertexArray(0)
 
     // Render triangle that cover the entire screen
     //gl.UseProgram(game.sp_screen)
@@ -374,10 +393,12 @@ game_render :: proc(game: ^Game) {
  
     // Swap buffers
     glfw.SwapBuffers(game.window)
+    gl_check_error()
 }
 
 
 game_exit :: proc(game: ^Game) {
+    free(game.font_chars)
     //free(game.point_shadow_mat)
     //gl.DeleteProgram(game.sp_screen)
     //gl.DeleteProgram(game.sp_shadow_point)
@@ -387,7 +408,7 @@ game_exit :: proc(game: ^Game) {
     gl.DeleteProgram(game.sp_light)
     gl.DeleteProgram(game.sp_shadow_dir)
     gl.DeleteTextures(1, &game.shadowmap_dir)
-    gl.DeleteTextures(1, &game.font_texture)
+    gl.DeleteTextures(1, &game.font_tex)
     for key, &mesh in game.primitives {
         mesh_destroy(&mesh)
     }

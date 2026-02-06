@@ -21,12 +21,12 @@ mesh_new :: proc(verts: []f32, indices: []u32) -> Mesh {
     mesh.num_indices = i32(len(indices))
     // Generate vertex array and store ID in the VAO variable
     gl.GenVertexArrays(1, &mesh.vao)
+    // Bind vertex array object
+    gl.BindVertexArray(mesh.vao)
     // Generate object buffer and store ID in the VBO variable
     gl.GenBuffers(1, &mesh.vbo)
     // Generate buffer object and store ID in the EBO variable
     gl.GenBuffers(1, &mesh.ebo)
-    // Bind vertex array object
-    gl.BindVertexArray(mesh.vao)
     // Bind the vertex buffer to the type ARRAY_BUFFER (the buffer type used for vertex buffer objects)
     gl.BindBuffer(gl.ARRAY_BUFFER, mesh.vbo)
     // Copy the vertices into the (currently bound) buffer memory
@@ -35,15 +35,18 @@ mesh_new :: proc(verts: []f32, indices: []u32) -> Mesh {
     gl.BindBuffer(gl.ELEMENT_ARRAY_BUFFER, mesh.ebo)
     // Copy the indices into the (currently bound) buffer memory
     gl.BufferData(gl.ELEMENT_ARRAY_BUFFER, size_of(f32) * len(indices), raw_data(indices), gl.STATIC_DRAW)
+    // Enable vertex attributes 0, 1 and 2
+    gl.EnableVertexAttribArray(0)
+    gl.EnableVertexAttribArray(1)
+    gl.EnableVertexAttribArray(2)
     // Specify how to interpret vertex data (position)
     gl.VertexAttribPointer(0, 3, gl.FLOAT, gl.FALSE, 8 * size_of(f32), 0)
-    gl.EnableVertexAttribArray(0)
     // Specify how to interpret vertex data (normals)
     gl.VertexAttribPointer(1, 3, gl.FLOAT, gl.FALSE, 8 * size_of(f32), 3 * size_of(f32))
-    gl.EnableVertexAttribArray(1)
     // Specify how to interpret vertex data (texture coords)
     gl.VertexAttribPointer(2, 2, gl.FLOAT, gl.FALSE, 8 * size_of(f32), 6 * size_of(f32))
-    gl.EnableVertexAttribArray(2)
+    // Unbind vertex array object
+    gl.BindVertexArray(0)
     // Return the mesh struct
     return mesh
 }

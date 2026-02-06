@@ -40,8 +40,8 @@ model_render :: proc(model: ^Model, shader_program: u32, shadow_pass: bool = fal
         // Bind texture object (1)
         //gl.BindTexture(gl.TEXTURE_2D, model.material.specular)
     }
-    // Bind vertex array object
-    gl.BindVertexArray(model.mesh.vao)
     // Draw primitves
+    gl.BindVertexArray(model.mesh.vao)
     gl.DrawElements(gl.TRIANGLES, model.mesh.num_indices, gl.UNSIGNED_INT, nil)
+    gl.BindVertexArray(0)
 }

@@ -35,9 +35,11 @@ DIR_SHADOW_CLIP_FAR      :: 20
 OPTION_VSYNC             :: false
 OPTION_ANTI_ALIAS        :: true
 OPTION_GAMMA_CORRECTION  :: true
-TEXTURE_FONT             :: "./assets/font.png"
-FONT_WIDTH               :: 8
-FONT_HEIGHT              :: 16
+FONT_PATH                 :: "./assets/font.png"
+FONT_WIDTH                :: 8
+FONT_HEIGHT               :: 16
+FONT_MAX_CHARS            :: 12000
+FONT_SPACING              :: 2
 
 
 main :: proc() {
