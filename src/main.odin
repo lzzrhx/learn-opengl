@@ -23,8 +23,8 @@ SHADER_SCREEN_VERT       :: "./src/glsl/screen.vert"
 SHADER_SCREEN_FRAG       :: "./src/glsl/screen.frag"
 SHADER_FONT_VERT         :: "./src/glsl/font.vert"
 SHADER_FONT_FRAG         :: "./src/glsl/font.frag"
-TEXTURE_DIFFUSE          :: "./assets/container2.png"
-TEXTURE_SPECULAR         :: "./assets/container2-specular.png"
+//TEXTURE_DIFFUSE          :: "./assets/container2.png"
+//TEXTURE_SPECULAR         :: "./assets/container2-specular.png"
 NUM_POINT_LIGHTS         :: 1
 SHADOWMAP_SIZE           :: 4096
 CLIP_NEAR                :: 0.1

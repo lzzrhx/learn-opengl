@@ -4,31 +4,21 @@ import "core:mem"
 import "vendor:glfw"
 
 
-WINDOW_WIDTH            :: 1920
-WINDOW_HEIGHT           :: 1080
-WINDOW_TITLE            :: "gl"
-GL_VERSION_MAJOR        :: 4
-GL_VERSION_MINOR        :: 3
-SHADER_SOLID_VERT       :: "./src/shaders/solid.vert"
-SHADER_SOLID_FRAG       :: "./src/shaders/solid.frag"
-SHADER_LIGHT_VERT       :: "./src/shaders/light.vert"
-SHADER_LIGHT_FRAG       :: "./src/shaders/light.frag"
-SHADER_SHADOW_VERT      :: "./src/shaders/shadow.vert"
-SHADER_EMPTY_FRAG       :: "./src/shaders/empty.frag"
-SHADER_SCREEN_VERT      :: "./src/shaders/screen.vert"
-SHADER_SCREEN_FRAG      :: "./src/shaders/screen.frag"
-SHADER_FONT_VERT        :: "./src/shaders/font.vert"
-SHADER_FONT_FRAG        :: "./src/shaders/font.frag"
-TEXTURE_DIFFUSE         :: "./assets/container2.png"
-TEXTURE_SPECULAR        :: "./assets/container2-specular.png"
-NUM_POINT_LIGHTS        :: 1
-SHADOWMAP_SIZE          :: 4096
-CLIP_NEAR               :: 0.1
-CLIP_FAR                :: 100
-OPTION_VSYNC            :: false
-OPTION_ANTI_ALIAS       :: true
-OPTION_GAMMA_CORRECTION :: true
-TEXTURE_FONT            :: "./assets/font.png"
+WINDOW_WIDTH             :: 1920
+WINDOW_HEIGHT            :: 1080
+WINDOW_TITLE             :: "gl"
+GL_VERSION_MAJOR         :: 4
+GL_VERSION_MINOR         :: 3
+SHADER_FONT_VERT         :: "./src/glsl/font.vert"
+SHADER_FONT_FRAG         :: "./src/glsl/font.frag"
+OPTION_VSYNC             :: false
+OPTION_ANTI_ALIAS        :: false
+OPTION_GAMMA_CORRECTION  :: false
+FONT_PATH                 :: "./assets/font.png"
+FONT_WIDTH                :: 8
+FONT_HEIGHT               :: 16
+FONT_MAX_CHARS            :: 12000
+FONT_SPACING              :: 2
 
 
 main :: proc() {
@@ -41,26 +31,8 @@ main :: proc() {
     defer mem_check_leaks(&tracking_allocator)
 
     // Program initialization
-    game := &Game{
-        primitives    = make(map[Primitive]Mesh),
-        meshes        = make(map[string]Mesh),
-        materials     = make([dynamic]Material),
-        models        = make([dynamic]Model),
-        dir_light     = &DirLight{},
-        point_lights  = new([NUM_POINT_LIGHTS]PointLight),
-        //spot_light    = &SpotLight{},
-        camera        = &Camera{
-            pos   = {0.0, 1.0, 0.0},
-            up    = {0, 1, 0},
-            front = {0, 0, -1},
-            speed = 2.5,
-            yaw   = -90,
-            pitch = 0,
-            fov   = 45.0,
-        },
-    }
+    game := &Game{}
     game_init(game)
-    game_setup(game)
 
     // Main Loop
     for !glfw.WindowShouldClose(game.window) {
